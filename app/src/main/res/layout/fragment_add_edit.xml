@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.kenji.waris.model.Position" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.wariskan.ui.addedit.AddEditViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:id="@+id/header_text"
+                android:layout_margin="10dp"
+                tools:text="Position"
+                android:textColor="@color/primaryLightColor"
+                style="@style/header_text" />
+
+
+            <!-- Name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_layout"
+                style="@style/addedit_row_layout"
+                android:hint="@string/full_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:background="@android:color/white"
+                    android:shadowColor="@color/primaryColor"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Status -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/status_layout"
+                style="@style/addedit_row_layout">
+
+                <TextView
+                    android:id="@+id/status_label"
+                    style="@style/addedit_row_label"
+                    android:text="@string/status"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/status_guideline"
+                    style="@style/addedit_row_guideline" />
+
+                <Spinner
+                    android:id="@+id/status_spinner"
+                    style="@style/addedit_row_spinner"
+                    app:layout_constraintLeft_toRightOf="@id/status_guideline"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Faith  -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/faith_layout"
+                style="@style/addedit_row_layout">
+
+                <TextView
+                    style="@style/addedit_row_label"
+                    android:text="@string/faith"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/faith_guideline"
+                    style="@style/addedit_row_guideline" />
+
+                <Spinner
+                    android:id="@+id/faith_spinner"
+                    style="@style/addedit_row_spinner"
+                    app:layout_constraintLeft_toRightOf="@id/faith_guideline"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Gender -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/gender_layout"
+                style="@style/addedit_row_layout">
+
+                <TextView
+                    style="@style/addedit_row_label"
+                    android:text="@string/gender"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_guideline"
+                    style="@style/addedit_row_guideline" />
+
+                <Spinner
+                    android:id="@+id/gender_spinner"
+                    style="@style/addedit_row_spinner"
+                    app:layout_constraintLeft_toRightOf="@id/guide_guideline"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 1 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/one"
+                style="@style/addedit_row_layout"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/query_one"
+                    style="@style/addedit_row_label"
+                    tools:text="@string/query"
+                    app:layout_constraintRight_toLeftOf="@id/one_guideline"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/one_guideline"
+                    style="@style/addedit_row_guideline" />
+
+                <Spinner
+                    android:id="@+id/one_spinner"
+                    style="@style/addedit_row_spinner"
+                    app:layout_constraintLeft_toRightOf="@id/one_guideline"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 2 -->
+            <LinearLayout
+                android:id="@+id/two"
+                style="@style/addedit_row_layout"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:paddingLeft="12dp"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/query_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/query"
+                    tools:ignore="MissingConstraints"/>
+
+                <Spinner
+                    android:id="@+id/two_spinner"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    tools:ignore="MissingConstraints" />
+
+            </LinearLayout>
+
+            <!-- Save -->
+            <Button
+                android:id="@+id/save_button"
+                style="@style/addedit_row_layout"
+                android:background="@color/primaryLightColor"
+                android:onClick="@{() -> viewModel.save()}"
+                android:textColor="@android:color/white"
+                android:text="@string/save" />
+
+            <!-- Delete -->
+            <Button
+                android:textColor="@android:color/white"
+                android:id="@+id/delete_button"
+                style="@style/match_wrap"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:onClick="@{() -> viewModel.delete()}"
+                android:text="@string/delete" />
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_deceased">
+
+    <fragment
+        android:id="@+id/navigation_deceased"
+        android:name="com.wariskan.ui.deceased.DeceasedFragment"
+        android:label="@string/deceased"
+        tools:layout="@layout/fragment_deceased" />
+
+    <fragment
+        android:id="@+id/navigation_legacy"
+        android:name="com.wariskan.ui.legacy.LegacyFragment"
+        android:label="@string/legacy"
+        tools:layout="@layout/fragment_legacy" />
+
+    <fragment
+        android:id="@+id/navigation_heirs"
+        android:name="com.wariskan.ui.heirs.HeirsFragment"
+        android:label="@string/heirs"
+        tools:layout="@layout/fragment_heirs" />
+    <fragment
+        android:id="@+id/navigation_heir"
+        android:name="com.wariskan.ui.heir.HeirFragment"
+        android:label="fragment_heir"
+        tools:layout="@layout/fragment_heir" >
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_add_edit"
+        android:name="com.wariskan.ui.addedit.AddEditFragment"
+        android:label="AddEditFragment"
+        tools:layout="@layout/fragment_add_edit"/>
+</navigation>

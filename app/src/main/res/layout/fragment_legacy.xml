@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.wariskan.ui.legacy.LegacyViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:inputType="textMultiLine"
+            android:text="@string/legacy_instruction" />
+
+
+        <!-- Legacy -->
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/legacy_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/legacy"
+            android:inputType="number"
+            android:singleLine="true" />
+
+        <!-- Calculate -->
+        <Button
+            android:text="@string/calculate"
+            android:onClick="@{() -> viewModel.calculate()}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/calculated_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/primaryLightColor"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:text="@string/calculated_title" />
+
+        <TextView
+            android:id="@+id/calculated_instruction"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginTop="10dp"
+            android:text="@string/calculated_instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Deceased -->
+    <item
+        android:id="@+id/navigation_deceased"
+        android:icon="@drawable/baseline_person_white_24"
+        android:title="@string/deceased" />
+
+    <!-- Legacy -->
+    <item
+        android:id="@+id/navigation_legacy"
+        android:icon="@drawable/baseline_account_balance_wallet_white_24"
+        android:title="@string/legacy" />
+
+    <!-- Heirs -->
+    <item
+        android:id="@+id/navigation_heirs"
+        android:icon="@drawable/baseline_people_24"
+        android:title="@string/heirs" />
+
+    <!--    &lt;!&ndash; Settings &ndash;&gt;-->
+    <!--    <item android:title="@string/settings" />-->
+
+</menu>

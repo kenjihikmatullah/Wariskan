@@ -1,0 +1,343 @@
+<resources>
+    <string name="add_edit_title" translatable="false">
+        %1$s %2$s
+    </string>
+
+    <!-- Name -->
+    <string name="full_name">Full Name</string>
+    <string name="lifetime">Lifetime</string>
+
+    <!-- Legacy -->
+    <string name="legacy">Legacy</string>
+
+    <!-- Gender -->
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+
+    <!-- Alive -->
+    <string name="status" translatable="false">Status</string>
+    <string name="alive">Alive</string>
+    <string name="dead">Dead</string>
+
+    <!-- Faith -->
+    <string name="faith">Faith</string>
+    <string name="islam" translatable="false">Islam</string>
+    <string name="kafir" translatable="false">Non Islam</string>
+
+    <!-- Position -->
+    <string name="deceased">Deceased</string>
+    <string name="heirs">Heirs</string>
+    <string name="heir">Heir</string>
+    <string name="dad">Dad</string>
+    <string name="mom">Mom</string>
+    <string name="husband">Husband</string>
+    <string name="wife">Wife</string>
+    <string name="child">Child</string>
+    <string name="sibling">Sibling</string>
+    <string name="grandpa">Grandpa</string>
+    <string name="grandma">Grandma</string>
+    <string name="grandchild">Grandchild</string>
+    <string name="uncle">Uncle</string>
+    <string name="male_cousin">Male Cousin</string>
+    <string name="nephew">Nephew</string>
+
+    <!-- Position Extended -->
+    <string name="full_sibling">
+        Full Sibling
+    </string>
+    <string name="paternal_sibling">
+        Peternal Sibling
+    </string>
+    <string name="maternal_sibling">
+        Maternal Sibling
+    </string>
+    <string name="full_brother">
+        Full Brother
+    </string>
+    <string name="paternal_brother">
+        Paternal Brother
+    </string>
+    <string name="maternal_brother">
+        Maternal Brother
+    </string>
+
+    <!-- Button -->
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="add">Add</string>
+    <string name="calculate">Calculate</string>
+
+    <!-- Content description TODO() -->
+
+    <!-- Number Units -->
+    <string name="thousand">k</string>
+    <string name="million">Million</string>
+    <string name="billion">Billion</string>
+
+    <!-- Boolean -->
+    <string name="yes">
+        Yes
+    </string>
+    <string name="no">
+        No
+    </string>
+
+    <!-- Spinners -->
+    <string-array name="status_array">
+        <item>@string/alive</item>
+        <item>@string/dead</item>
+    </string-array>
+    <string-array name="faith_array">
+        <item>@string/islam</item>
+        <item>@string/kafir</item>
+    </string-array>
+    <string-array name="gender_array">
+        <item>@string/male</item>
+        <item>@string/female</item>
+    </string-array>
+    <string-array name="boolean_array">
+        <item>@string/yes</item>
+        <item>@string/no</item>
+    </string-array>
+    <string-array name="brother_array">
+        <item>@string/full_brother</item>
+        <item>@string/paternal_brother</item>
+        <item>@string/maternal_brother</item>
+    </string-array>
+    <string-array name="sibling_array">
+        <item>@string/full_sibling</item>
+        <item>@string/paternal_sibling</item>
+        <item>@string/maternal_sibling</item>
+    </string-array>
+
+    <!-- Queries -->
+    <string name="query">Query</string>
+    <string name="query_one_nephew">
+        Is his dad brother of the deceased?
+    </string>
+    <string name="query_one_male_cousin">
+        Is his dad brother of the deceased\'s dad?
+    </string>
+    <string name="query_one_uncle">
+        Is he brother of the deceased\'s dad?
+    </string>
+    <string name="query_one_grandchild">
+        Is his/her dad the son of the deceased?
+    </string>
+    <string name="query_one_grandma">
+        Is she the mom of the deceased\'s dad?
+    </string>
+    <string name="query_one_grandpa">
+        Is he the dad of the deceased\'s dad?
+    </string>
+    <string name="query_sibling">
+        What kind of sibling?
+    </string>
+    <string name="query_brother">
+        What kind of brother?
+    </string>
+
+    <!-- Error -->
+    <string name="et_blank">
+        Must be filled
+    </string>
+    <string name="continuous_rewards_hadith">
+        “When a man dies, his good deeds come to an end except three: ongoing charity, beneficial knowledge, and righteous offspring who will pray for him.”\n
+        <b>(Muslim)</b>
+    </string>
+    <string name="abdullah" translatable="false">Abdullah</string>
+    <string name="appname" translatable="false">wariskan</string>
+    <string name="obtained">Obtained</string>
+
+    <!-- Primaries -->
+    <string name="dad_1_3">
+        Dad gets 1/3 if the deceased didn\'t leave child
+        and grandchild (An Nisa : 11)
+    </string>
+    <string name="dad_1_6">
+        Dad gets 1/6 if the deceased left child or grandchild
+        (An Nisa : 11)
+    </string>
+    <string name="mom_1_3">
+        Mom gets 1/3 if the deceased didn\'t leave child,
+        grandchild, and number of sibling is less than two (An Nisa : 11)
+    </string>
+    <string name="mom_1_6">
+        Mom gets 1/6 if the deceased left child, grandchild,
+        or number of siblings are two or more (An Nisa : 11)
+    </string>
+    <string name="husband_1_2">
+        Husband gets 1/2 if the deceased didn\'t left child
+        and grandchild (An Nisa : 12)
+    </string>
+    <string name="husband_1_4">
+        Husband gets 1/4 if the deceased left child or
+        grandchild (An Nisa : 12)
+    </string>
+    <string name="wives_1_4">
+        Wives get 1/4 if the deceased didn\'t leave child and grandchild.
+        Divided equally if more than one (An Nisa : 12)
+    </string>
+    <string name="wives_1_8">
+        Wives get 1/8 if the deceased left child or grandchild.
+        Divided equally if more than one (An Nisa : 12)
+    </string>
+    <string name="daughter_1_2">
+        Daughter gets 1/2 if alone and the deceased didn\'t
+        leave sons and sons of sons (An Nisa : 11)
+    </string>
+    <string name="daughters_2_3">
+        Daughters gets 2/3 if more than one and the deceased didn\'t
+        leave sons and sons of sons. Divided equally (An Nisa : 11)
+    </string>
+    <string name="full_sister_1_2">
+        Full sister gets 1/2 if alone, kalalah, and the deceased
+        didn\'t leave full brother (An Nisa : 176)
+    </string>
+    <string name="full_sisters_2_3">
+        Full sisters get 2/3 if more than one, kalalah, and the deceased
+        didn\'t leave full brother (An Nisa : 176)
+    </string>
+    <string name="paternal_sister_1_2">
+        Paternal sister gets 1/2 if alone, kalalah, and the deceased
+        didn\'t leave full brother, full sister, and paternal brother
+    </string>
+    <string name="paternal_sisters_2_3">
+        Paternal sisters get 2/3 if more than one, kalalah, and the deceased
+        didn\'t leave full brother, full sister, and paternal brother
+    </string>
+    <string name="paternal_sisters_1_6">
+        Paternal sisters get 1/6 if kalalah, the deceased left only
+        a full sister, and the deceased
+        didn\'t leave full brother and paternal brother
+    </string>
+    <string name="maternal_siblings_1_3">
+        Maternal siblings get 1/3 if more than one and kalalah.
+        Divided equally
+    </string>
+    <string name="maternal_sibling_1_6">
+        Maternal sibling gets 1/6 if alone and kalalah
+    </string>
+    <string name="dad_of_dad_1_6">
+        Dad of dad gets 1/6 if the deceased didn\'t leave dad,
+        child, and grandchild
+    </string>
+    <string name="grandmas_1_6">
+        Grandmas get 1/6. Divided equally if more than one
+    </string>
+    <string name="daughter_of_son_1_2">
+        Daughter of son gets 1/2 if alone and the deceased didn\'t
+        leave son, daughter, and son of son
+    </string>
+    <string name="daughter_of_son_1_6">
+        Daughter of son gets 1/6 if the deceased left only
+        a daughter and the deceased did\'t left son and
+        son of son
+    </string>
+    <string name="daughters_of_sons_2_3">
+        Daughters of sons get 2/3 if more than one and the deceased
+        didn\'t leave son, daughter, or son of son. Divided equally
+    </string>
+
+
+    <!-- Special -->
+    <string name="mom_special">
+        Mom gets special amount if the deceased left dad and spouse.
+        That is 1/3 of the remaining of the legacy after it\'s shared
+        to both of dad and spouse
+    </string>
+
+    <!-- Secondary -->
+    <string name="son_secondary">
+        Son get ashabah. Divided equally\n.
+        If there is also daughter, divided with ratio 2:1\n.
+        (Son get 2x more than daughter)
+    </string>
+    <string name="daughter_secondary">
+        If there deceased left son and daughter, they get
+        ashabah, divided with ratio 2:1\n.
+        (Son get 2x more than daughter)
+    </string>
+
+    <!-- Ineligible -->
+    <string name="ineligible_status">
+        Heir who have died is not eligible to get the legacy
+    </string>
+    <string name="ineligible_faith">
+        Heir who isn\'t Muslim is not eligible to get the legacy
+    </string>
+    <string name="ineligible_killing">
+        Heir who played a role in the murder of the deceased
+        is not eligible to get the legacy
+    </string>
+
+    <!-- Disentitled -->
+    <string name="disentitled_children_of_sons">
+        Children of sons are disentitled if
+        the deceased left sons
+    </string>
+    <string name="disentitled_dad_of_dad">
+        Dad of dad is disentitled if the deceased
+        left dad
+    </string>
+    <string name="disentitled_mom_of_dad">
+        Dad of dad is disentitled if the deceased
+        left dad and mom
+    </string>
+    <string name="disentitled_mom_of_mom">
+        Mom of mom is disentitled if the deceased
+        left mom
+    </string>
+    <string name="disentitled_full_brothers">
+        Full brothers are disentitled by dad and sons
+    </string>
+    <string name="disentitled_paternal_brothers">
+        Paternal brothers are disentitled by dad, sons,
+        and full brothers
+    </string>
+    <string name="disentitled_maternal_brothers">
+        Maternal brothers are disentitled by dad, sons,
+        and full brothers
+    </string>
+    <string name="disentitled_sons_of_full_brothers">
+        Sons of full brothers are disentitled by dad, dad of dad,
+        sons, sons of sons, full brothers, and paternal brothers
+    </string>
+    <string name="disentitled_sons_of_paternal_brothers">
+        Sons of paternal brothers are disentitled by dad, dad of dad,
+        sons, sons of sons, full brothers, paternal brothers,
+        and <b>sons of full brothers</b>
+    </string>
+    <string name="disentitled_full_brothers_of_dad">
+        Full brothers of dad are <b>disentitled by</b> dad, dad of dad,
+        sons, sons of sons, full brothers, paternal brothers,
+        sons of full brothers, and <b>sons of paternal brothers</b>
+    </string>
+    <string name="disentitled_paternal_brothers_of_dad">
+        Paternal brothers of dad are <b>disentitled by</b> dad, dad of dad,
+        sons, sons of sons, full brothers, paternal brothers,
+        sons of full brothers, sons of paternal brothers, and
+        <b>full brotbers of dad</b>
+    </string>
+    <string name="disentitled_sons_of_paternal_brothers_of_dad">
+        Sons of paternal brothers of dad are <b>disentitled by</b> dad,
+        dad of dad, sons, sons of sons, full brothers, paternal brothers,
+        sons of full brothers, sons of paternal brothers,
+        full brotbers of dad, and <b>paternal brothers of dad</b>
+    </string>
+
+    <!-- Instruction -->
+    <string name="legacy_instruction">
+        Fill the amount of legacy to be shared
+    </string>
+    <string name="calculated_instruction">You can see the results in each heir profile</string>
+    <string name="calculated_title">Calculated!</string>
+    <string name="home_instruction">Click add button to start</string>
+
+
+    <string name="app_name">Wariskan</string>
+    <string name="ineligible">Ineligible</string>
+    <string name="disentitled">Disentitled</string>
+</resources>
