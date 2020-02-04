@@ -2,6 +2,7 @@ package com.wariskan.ui.heir
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -10,13 +11,15 @@ import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders.of
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
 import com.kenji.waris.model.Position.*
 import com.wariskan.AddEditActivity
-import com.wariskan.R.drawable.ic_add
 import com.wariskan.R.drawable.baseline_edit_white_48dp
-import com.wariskan.ui.inheritance.InheritanceViewModel
+import com.wariskan.R.drawable.ic_add
 import com.wariskan.R.layout.fragment_heir
 import com.wariskan.databinding.FragmentHeirBinding
+import com.wariskan.ui.inheritance.InheritanceViewModel
 import com.wariskan.util.ID
 import com.wariskan.util.ORDER
 import com.wariskan.util.POSITION
@@ -69,7 +72,7 @@ class HeirFragment() : Fragment() {
     ): View? {
 
         binding = inflate(inflater, fragment_heir, container, false)
-
+        refreshAd()
         setUpViewModel()
         handleArguments()
         setUpAdapter()
@@ -78,6 +81,17 @@ class HeirFragment() : Fragment() {
         setOnDelete()
 
         return binding.root
+    }
+
+    private fun refreshAd() {
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+        binding.adView.adListener = object : AdListener() {
+            override fun onAdFailedToLoad(errorCode: Int) {
+                super.onAdFailedToLoad(errorCode)
+                Log.i("HEHEHE", "error: $errorCode")
+            }
+        }
     }
 
     private fun setUpViewModel() {
@@ -167,9 +181,10 @@ class HeirFragment() : Fragment() {
                     repository.inheritance.value?.deleteHeir(position, order)
                     update()
                     adapter.notifyDataSetChanged()
-                    inheritanceViewModel.repository.inheritance.value?.getHeirList(position)?.let { list ->
-                        updateFab(list.size)
-                    }
+                    inheritanceViewModel.repository.inheritance.value?.getHeirList(position)
+                        ?.let { list ->
+                            updateFab(list.size)
+                        }
                 }
                 deleted()
 

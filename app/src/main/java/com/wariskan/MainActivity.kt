@@ -3,6 +3,7 @@ package com.wariskan
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
+import com.google.android.gms.ads.MobileAds
 import com.wariskan.R.layout.activity_main
 import com.wariskan.databinding.ActivityMainBinding as Binding
 

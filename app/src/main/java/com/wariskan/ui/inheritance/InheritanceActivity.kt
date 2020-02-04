@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.ViewModelProviders.of
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.MobileAds
 import com.kenji.waris.database.InheritanceDatabase.Companion.getInstance
 import com.kenji.waris.model.Position
 import com.wariskan.R.id.nav_host_fragment
@@ -35,6 +36,7 @@ class InheritanceActivity : Activity() {
         viewModel.apply {
             if (id != -1) get()
         }
+        setUpAds()
     }
 
     private fun setUpViewModel() {
@@ -72,6 +74,10 @@ class InheritanceActivity : Activity() {
              */
             bottomNavigation.setupWithNavController(controller)
         }
+    }
+
+    private fun setUpAds() {
+        MobileAds.initialize(this){}
     }
 
 }

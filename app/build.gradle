@@ -15,11 +15,15 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
         }
     }
     dataBinding {
@@ -96,4 +100,10 @@ dependencies {
 
     // Circular ImageView
     implementation'com.mikhaellopez:circularimageview:3.2.0'
+
+    // Play Services
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+
 }
