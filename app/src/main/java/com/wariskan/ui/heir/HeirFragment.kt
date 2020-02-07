@@ -49,23 +49,6 @@ class HeirFragment() : Fragment() {
             }
         }
 
-    /**
-     * Limit of list size
-     * for each position
-     */
-    private val limit: Int
-        get() {
-            return when (viewModel.position) {
-                DAD -> 1
-                MOM -> 1
-                HUSBAND -> 1
-                WIFE -> 4
-                GRANDPA -> 2
-                GRANDMA -> 2
-                else -> Int.MAX_VALUE
-            }
-        }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -120,21 +103,22 @@ class HeirFragment() : Fragment() {
     }
 
     private fun updateFab(size: Int) {
-
         viewModel.apply {
             binding.apply {
-
                 fab.visibility = VISIBLE
 
-                if (size < limit) {
+                /*
+                 * Able to add
+                 */
+                if (size < position.limit) {
                     fab.setImageResource(ic_add)
                     fab.setOnClickListener(addListener)
+                }
 
-                } else if (position in listOf(DAD, MOM, HUSBAND)) {
-                    fab.setImageResource(baseline_edit_white_48dp)
-                    fab.setOnClickListener(editListener)
-
-                } else {
+                /*
+                 * Not able
+                 */
+                else {
                     fab.visibility = GONE
                 }
             }

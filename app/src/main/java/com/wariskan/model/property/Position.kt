@@ -58,6 +58,24 @@ enum class Position {
             else -> false
         }
 
+    /**
+     * Limit of list size
+     * for each position
+     */
+    val limit: Int
+        get() {
+            return when (this) {
+                DECEASED -> 1
+                DAD -> 1
+                MOM -> 1
+                HUSBAND -> 1
+                WIFE -> 4
+                GRANDPA -> 2
+                GRANDMA -> 2
+                else -> Int.MAX_VALUE
+            }
+        }
+
     companion object {
         fun getDefaultGender(position: Position) : Gender {
             return when (position) {

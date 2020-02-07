@@ -27,17 +27,15 @@ class Inheritance {
 
     private val kalalah: Boolean
         get() {
-            return !(dad.eligible || children.sons.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist())
+            return !(dad.thatEligibleIsExist() || children.sons.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist())
         }
 
     @Embedded(prefix = "inheritee_")
     var deceased = Deceased()
 
-    @Embedded(prefix = "dad_")
-    var dad = Heir().apply { gender = MALE }
+    var dad = mutableListOf<Heir>()
 
-    @Embedded(prefix = "mom_")
-    var mom = Heir().apply { gender = FEMALE }
+    var mom = mutableListOf<Heir>()
 
     var husband = mutableListOf<Heir>()
 
@@ -89,7 +87,7 @@ class Inheritance {
              * is disentitled by dad
              */
             grandpas.dadOfDad.forEach {
-                it.eligibleTwo = !(dad.eligible)
+                it.eligibleTwo = !(dad.thatEligibleIsExist())
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_dad_of_dad)
             }
@@ -98,7 +96,7 @@ class Inheritance {
              * Mom of dad
              */
             grandmas.momOfDad.forEach {
-                it.eligibleTwo = !(dad.eligible || mom.eligible)
+                it.eligibleTwo = !(dad.thatEligibleIsExist() || mom.thatEligibleIsExist())
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_mom_of_dad)
             }
@@ -107,7 +105,7 @@ class Inheritance {
              * Mom of mom
              */
             grandmas.momOfMom.forEach {
-                it.eligibleTwo = !(mom.eligible)
+                it.eligibleTwo = !(mom.thatEligibleIsExist())
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_mom_of_mom)
             }
@@ -119,7 +117,7 @@ class Inheritance {
              * - sons
              */
             siblings.fullBrothers.forEach {
-                it.eligibleTwo = !(dad.eligible || children.sons.thatEligibleIsExist())
+                it.eligibleTwo = !(dad.thatEligibleIsExist() || children.sons.thatEligibleIsExist())
                 eligibleBefore = it.eligibleTwo
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_full_brothers)
@@ -149,7 +147,7 @@ class Inheritance {
              */
             siblings.maternalBrothers.forEach {
                 it.eligibleTwo =
-                    !(dad.eligible || grandpas.dadOfDad.thatEligibleIsExist() || children.children.thatEligibleIsExist())
+                    !(dad.thatEligibleIsExist() || grandpas.dadOfDad.thatEligibleIsExist() || children.children.thatEligibleIsExist())
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_maternal_brothers)
             }
@@ -258,7 +256,8 @@ class Inheritance {
                 it.eligibleTwo =
                     !(eligibleBefore || uncles.paternalBrothersOfDad.thatEligibleIsExist())
                 if (!it.eligibleTwo)
-                    it.`in`.disentitler = context.getString(disentitled_sons_of_paternal_brothers_of_dad)
+                    it.`in`.disentitler =
+                        context.getString(disentitled_sons_of_paternal_brothers_of_dad)
             }
         }
 
@@ -271,20 +270,29 @@ class Inheritance {
                 divider: Int
             ) {
 
+                if (list.isEmpty()) return
+
                 /*
                  * Record the amount of shared primary inheritance
                  */
-                if (list.isNotEmpty()) {
-                    legacy.primaryShared += legacy.shareable / divider * multiplier
-                    Log.i("HEHEHE", "From: ${list[0].name}")
-                    Log.i("HEHEHE", "Just shared: ${legacy.shareable / divider * multiplier}")
-                }
+                legacy.primaryShared += legacy.shareable / divider * multiplier
+                Log.i("HEHEHE", "From: ${list[0].name}")
+                Log.i("HEHEHE", "Just shared: ${legacy.shareable / divider * multiplier}")
 
                 /*
                  * Share the inheritance evenly
                  */
                 list.forEach {
                     it.`in`.primary += legacy.shareable / divider / list.size * multiplier
+                }
+            }
+
+            fun explainIt(
+                list: List<Heir>,
+                text: Int
+            ) {
+                list.forEach {
+                    it.`in`.one = context.getString(text)
                 }
             }
 
@@ -299,9 +307,9 @@ class Inheritance {
                  * QS An Nisa : 12
                  * KHI : 179
                  */
-                husband.thatEligible().let {
+                husband.thatEligible().let { husband ->
                     if (children.children.isNotEmpty()) return@let
-                    shareIt(out, it, 1, 2)
+                    shareIt(out, husband, 1, 2)
                     husband.forEach { it.`in`.one = context.getString(husband_1_2) }
                 }
 
@@ -453,25 +461,14 @@ class Inheritance {
             deceased.legacy.let out@{ out ->
 
                 /*
-                 * Dad
-                 * Ayah mendapatkan 1/3 jika tidak terdapat anak
-                 * An Nisa (4) : 11
-                 */
-                dad.takeIf { it.eligible }?.let {
-                    if (children.children.thatEligibleIsExist()) return@let
-                    shareIt(out, listOf(dad), 1, 3)
-                    dad.`in`.one = context.getString(dad_1_3)
-                }
-
-                /*
                  * Mom
                  * Ibu mendapatkan 1/3 jika pewaris tidak mempunyai anak dan tidak mempunyai saudara
                  * An Nisa 4:11
                  */
-                mom.takeIf { it.eligible }?.let {
-                    if (children.children.isNotEmpty() || grandchildren.childrenOfSons.isNotEmpty() || siblings.fullSiblings.isNotEmpty()) return@let
-                    shareIt(out, listOf(mom), 1, 3)
-                    mom.`in`.one = context.getString(mom_1_3)
+                mom.thatEligible().let { list ->
+                    if (list.isEmpty() || children.children.isNotEmpty() || grandchildren.childrenOfSons.isNotEmpty() || siblings.fullSiblings.isNotEmpty()) return@let
+                    shareIt(out, list, 1, 3)
+                    explainIt(list, mom_1_3)
                 }
 
                 /*
@@ -494,13 +491,14 @@ class Inheritance {
 
                 /*
                  * Dad
-                 * Ayah mendapatkan 1/6 jika pewaris mempunyai anak
+                 * gets 1/6 if the deceased left children or children of sons
                  * QS An Nisa : 11
                  */
-                dad.takeIf { it.eligible }?.let {
-                    if (!children.children.thatEligibleIsExist()) return@let
-                    shareIt(out, listOf(dad), 1, 6)
-                    dad.`in`.one = context.getString(dad_1_6)
+                dad.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
+                    if (!(children.children.thatEligibleIsExist() || (grandchildren.childrenOfSons.thatEligibleIsExist()))) return@let
+                    shareIt(out, list, 1, 6)
+                    explainIt(list, dad_1_6)
                 }
 
                 /*
@@ -508,10 +506,11 @@ class Inheritance {
                  * Ibu mendapatkan 1/6 jika pewaris mempunyai anak atau mempunyai beberapa saudara
                  * QS An Nisa : 11
                  */
-                mom.takeIf { it.eligible }?.let {
+                mom.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
                     if (children.children.thatEligibleIsExist() || siblings.fullSiblings.thatEligibleIsMany()) {
-                        shareIt(out, listOf(mom), 1, 6)
-                        mom.`in`.one = context.getString(mom_1_6)
+                        shareIt(out, list, 1, 6)
+                        explainIt(list, mom_1_6)
                     }
                 }
 
@@ -520,10 +519,12 @@ class Inheritance {
                  * mendapatkan 1/6
                  * but might be disentitled by dad
                  */
-                grandpas.dadOfDad.thatEligible().forEach {
-                    if (dad.eligible) return@forEach
-                    shareIt(out, listOf(dad), 1, 6)
-                    it.`in`.one = context.getString(dad_of_dad_1_6)
+                grandpas.dadOfDad.thatEligible().let { list ->
+                    if (dad.thatEligibleIsExist()) return@let
+                    shareIt(out, list, 1, 6)
+                    list.forEach {
+                        it.`in`.one = context.getString(dad_of_dad_1_6)
+                    }
                 }
 
                 /*
@@ -575,18 +576,22 @@ class Inheritance {
              * after assigning the respective shares due to them,
              * 1/3 of the Remainder will be assigned to the mother.
              */
-            if (dad.eligible && (husband.thatEligibleIsExist() || wives.thatEligibleIsExist())) {
-                mom.`in`.special = context.getString(mom_special)
-                var spentToThem = dad.`in`.primary
+            if (mom.thatEligibleIsExist() && dad.thatEligibleIsExist() && (husband.thatEligibleIsExist() || wives.thatEligibleIsExist())) {
+                mom[0].`in`.primary = 0.0
+                mom[0].`in`.one = ""
+                mom[0].`in`.special = context.getString(mom_special)
+
+
+                var spentToThem = dad[0].`in`.primary
                 if (husband.thatEligibleIsExist()) spentToThem += husband[0].`in`.primary
                 if (wives.thatEligibleIsExist()) wives.thatEligible().forEach {
-                        spentToThem += it.`in`.primary
-                    }
+                    spentToThem += it.`in`.primary
+                }
 
                 ((deceased.legacy.shareable - spentToThem) / 3).let { toMom ->
-                    mom.`in`.specialAmount += toMom
+                    mom[0].`in`.specialAmount += toMom
                     deceased.legacy.primaryShared += toMom
-                    mom.`in`.special = context.getString(mom_special)
+                    mom[0].`in`.special = context.getString(mom_special)
                 }
             }
         }
@@ -633,20 +638,44 @@ class Inheritance {
 
                 /*
                  * Sons of sons
+                 * (and could be with daughters of sons)
                  */
                 grandchildren.sonsOfSons.thatEligible().let { list ->
-                    list.forEach {
-                        it.`in`.secondary += secondaryShareable / list.size
+                    if (list.isNotEmpty()) return@let
+
+                    /*
+                     * Themeselves
+                     */
+                    if (!grandchildren.daughtersOfSons.thatEligibleIsExist()) {
+                        list.forEach {
+                            it.`in`.secondary += secondaryShareable / list.size
+                            it.`in`.two = context.getString(sons_of_sons_secondary)
+                        }
                     }
-                    if (list.isNotEmpty()) return@shared
-//                TODO("Are they could be sharing with daughters or others?")
+
+                    /*
+                     * With daughters of sons
+                     */
+                    else {
+                        val totalSize =
+                            (list.size * 2) + grandchildren.daughtersOfSons.thatEligible().size
+                        list.forEach {
+                            it.`in`.secondary += secondaryShareable / totalSize * 2
+                            it.`in`.two = context.getString(son_secondary)
+                        }
+                        grandchildren.daughtersOfSons.thatEligible().forEach {
+                            it.`in`.secondary += secondaryShareable / totalSize
+                            it.`in`.two = context.getString(daughters_of_sons_secondary)
+                        }
+                    }
+
                 }
 
                 /*
                  * Dad
                  */
-                dad.takeIf { it.eligible }?.let {
-                    it.`in`.secondary += secondaryShareable
+                dad.thatEligible().let {
+                    it[0].`in`.secondary += secondaryShareable
                     return@shared
                 }
 
@@ -724,8 +753,8 @@ class Inheritance {
 
         fun resetCalculation() {
             deceased.resetShared()
-            dad.resetIn()
-            mom.resetIn()
+            dad.forEach { it.resetIn() }
+            mom.forEach { it.resetIn() }
             husband.forEach { it.resetIn() }
             wives.forEach { it.resetIn() }
             children.children.forEach { it.resetIn() }
@@ -752,8 +781,8 @@ class Inheritance {
         */
         if (position in listOf(DAD, MOM) || order == -1) {
             when (position) {
-                DAD -> dad = heir.apply { gender = MALE }
-                MOM -> mom = heir.apply{ gender = FEMALE }
+                DAD -> dad.add(heir.apply { gender = MALE })
+                MOM -> mom.add(heir.apply { gender = FEMALE })
                 HUSBAND -> husband.add(heir.apply { gender = MALE })
                 WIFE -> wives.add(heir.apply { gender = FEMALE })
                 CHILD -> children.children.add(heir)
@@ -762,7 +791,9 @@ class Inheritance {
                 GRANDMA -> grandmas.grandmas.add(heir.apply { gender = FEMALE } as Grandma)
                 GRANDCHILD -> grandchildren.grandchildren.add(heir as Grandchild)
                 UNCLE -> uncles.uncles.add(heir.apply { gender = MALE } as Uncle)
-                MALE_COUSIN -> maleCousins.maleCousins.add(heir.apply { gender = MALE } as MaleCousin)
+                MALE_COUSIN -> maleCousins.maleCousins.add(heir.apply {
+                    gender = MALE
+                } as MaleCousin)
                 NEPHEW -> nephews.nephews.add(heir.apply { gender = MALE } as Nephew)
                 else -> 0.inc()
             }
@@ -773,8 +804,8 @@ class Inheritance {
          */
         else {
             when (position) {
-                DAD -> dad = heir.apply { gender = MALE }
-                MOM -> mom = heir.apply{ gender = FEMALE }
+                DAD -> dad.add(heir.apply { gender = MALE })
+                MOM -> mom.add(heir.apply { gender = FEMALE })
                 HUSBAND -> husband[order] = heir
                 WIFE -> wives[order] = heir
                 CHILD -> children.children[order] = heir
@@ -799,8 +830,8 @@ class Inheritance {
     ): Heir {
 
         return when (position) {
-            DAD -> dad
-            MOM -> mom
+            DAD -> dad[order]
+            MOM -> dad[order]
             HUSBAND -> husband[order]
             WIFE -> wives[order]
             CHILD -> children.children[order]
@@ -818,8 +849,8 @@ class Inheritance {
     @Ignore
     fun getHeirList(position: Position): List<Heir> {
         return when (position) {
-            DAD -> listOf(dad)
-            MOM -> listOf(mom)
+            DAD -> dad
+            MOM -> mom
             HUSBAND -> husband
             WIFE -> wives
             CHILD -> children.children
@@ -840,8 +871,8 @@ class Inheritance {
     ) {
 
         when (position) {
-            DAD -> dad = Heir()
-            MOM -> mom = Heir()
+            DAD -> dad.removeAt(order)
+            MOM -> mom.removeAt(order)
             HUSBAND -> husband.removeAt(order)
             WIFE -> wives.removeAt(order)
             CHILD -> children.children.removeAt(order)

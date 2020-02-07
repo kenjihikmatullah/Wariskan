@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.wariskan.util.MIGRATION_to_1_2
 
-@Database(entities = [Inheritance::class], version = 1, exportSchema = false)
+@Database(entities = [Inheritance::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class InheritanceDatabase : RoomDatabase(){
+abstract class InheritanceDatabase : RoomDatabase() {
     abstract val dao: InheritanceDao
 
     companion object {
@@ -26,6 +27,7 @@ abstract class InheritanceDatabase : RoomDatabase(){
                         InheritanceDatabase::class.java,
                         "inheritance_database"
                     )
+                        .addMigrations(MIGRATION_to_1_2)
                         .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance

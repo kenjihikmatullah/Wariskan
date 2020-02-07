@@ -256,9 +256,19 @@
         (Son get 2x more than daughter)
     </string>
     <string name="daughter_secondary">
-        If there deceased left son and daughter, they get
+        If deceased left son and daughter, they get
         ashabah, divided with ratio 2:1\n.
         (Son get 2x more than daughter)
+    </string>
+    <string name="sons_of_sons_secondary">
+        Sons of sons get ashabah. Divided equally\n.
+        If there is also daughters of sons, divided with ratio 2:1\n.
+        (Sons of sons get 2x more than daughters of sons)
+    </string>
+    <string name="daughters_of_sons_secondary">
+        If deceased left son of son and daughter of son, they get
+        ashabah, divided with ratio 2:1\n.
+        (Sons of sons get 2x more than daughters of sons)
     </string>
 
     <!-- Ineligible -->

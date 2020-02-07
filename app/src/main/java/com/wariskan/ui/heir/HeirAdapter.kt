@@ -81,17 +81,19 @@ class HeirAdapter(private val listener: Listener)
             /*
              * Initial of dad and mom
              */
-            if (item.name.isBlank()) {
-                it.statusBody.visibility = GONE
-                it.faithBody.visibility = GONE
-                it.inBody.visibility = GONE
-                it.detailsLayout.visibility = GONE
+            /**
+             * if (item.name.isBlank()) {
+            it.statusBody.visibility = GONE
+            it.faithBody.visibility = GONE
+            it.inBody.visibility = GONE
+            it.detailsLayout.visibility = GONE
             } else {
-                it.statusBody.visibility = VISIBLE
-                it.faithBody.visibility = VISIBLE
-                it.inBody.visibility = VISIBLE
-                it.detailsLayout.visibility = VISIBLE
+            it.statusBody.visibility = VISIBLE
+            it.faithBody.visibility = VISIBLE
+            it.inBody.visibility = VISIBLE
+            it.detailsLayout.visibility = VISIBLE
             }
+             */
 
             /*
              * Expand button
