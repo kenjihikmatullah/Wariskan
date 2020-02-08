@@ -25,6 +25,11 @@ class Inheritance {
     @Embedded(prefix = "preference_")
     var preference = Preference()
 
+    /**
+     * Kalalah
+     * is a condition where the deceased didn't leave
+     * son, son of son, dad, and dad of dad.
+     */
     private val kalalah: Boolean
         get() {
             return !(dad.thatEligibleIsExist() || grandpas.dadOfDad.thatEligibleIsExist() || children.sons.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist())
@@ -82,7 +87,7 @@ class Inheritance {
              * is disentitled by sons
              */
             grandchildren.childrenOfSons.forEach {
-                it.eligibleTwo = !(children.sons.thatEligibleIsExist())
+                it.eligibleTwo = !children.sons.thatEligibleIsExist()
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_children_of_sons)
             }
@@ -92,7 +97,7 @@ class Inheritance {
              * is disentitled by dad
              */
             grandpas.dadOfDad.forEach {
-                it.eligibleTwo = !(dad.thatEligibleIsExist())
+                it.eligibleTwo = !dad.thatEligibleIsExist()
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_dad_of_dad)
             }
@@ -110,7 +115,7 @@ class Inheritance {
              * Mom of mom
              */
             grandmas.momOfMom.forEach {
-                it.eligibleTwo = !(mom.thatEligibleIsExist())
+                it.eligibleTwo = !mom.thatEligibleIsExist()
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_mom_of_mom)
             }
@@ -122,8 +127,9 @@ class Inheritance {
              * - sons
              */
             siblings.fullBrothers.forEach {
-                it.eligibleTwo = !(dad.thatEligibleIsExist() || children.sons.thatEligibleIsExist())
-                eligibleBefore = it.eligibleTwo
+                //                it.eligibleTwo = !(dad.thatEligibleIsExist() || children.sons.thatEligibleIsExist())
+                it.eligibleTwo = kalalah
+                eligibleBefore = !it.eligibleTwo
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_full_brothers)
             }
@@ -137,9 +143,11 @@ class Inheritance {
              * - full brothers
              */
             siblings.paternalBrothers.forEach {
-                it.eligibleTwo = !(eligibleBefore || siblings.fullBrothers.thatEligibleIsExist())
-                if (!it.eligibleTwo)
+                //                it.eligibleTwo = !(eligibleBefore || siblings.fullBrothers.thatEligibleIsExist())
+                it.eligibleTwo = !(!kalalah || siblings.fullBrothers.thatEligibleIsExist())
+                if (!it.eligibleTwo) {
                     it.`in`.disentitler = context.getString(disentitled_paternal_brothers)
+                }
             }
 
             /**
@@ -151,19 +159,20 @@ class Inheritance {
              * - children
              */
             siblings.maternalBrothers.forEach {
-                it.eligibleTwo =
-                    !(dad.thatEligibleIsExist() || grandpas.dadOfDad.thatEligibleIsExist() || children.children.thatEligibleIsExist())
+                // it.eligibleTwo = !(dad.thatEligibleIsExist() || grandpas.dadOfDad.thatEligibleIsExist() || children.children.thatEligibleIsExist())
+                it.eligibleTwo = kalalah
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_maternal_brothers)
             }
 
-//            siblings.paternalSisters.forEach {
-//                it.eligibleTwo =
-//                    !(children.sons.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist()
-//                            || dad.eligible || siblings.fullBrothers.thatEligibleIsExist())
-//            }
+            /*
+             * Paternal sisters
+             */
+            siblings.paternalSisters.forEach {
+                //                it.eligibleTwo = !(children.sons.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist() || dad.thatEligibleIsExist() || siblings.fullBrothers.thatEligibleIsExist())
+                it.eligibleTwo = kalalah
+            }
 
-//            TODO('')
 
             /**
              * Sons of full brothers
@@ -176,9 +185,10 @@ class Inheritance {
              * - paternal brothers
              */
             nephews.sonsOfFullBrothers.forEach {
+                //                it.eligibleTwo = !(eligibleBefore || grandpas.dadOfDad.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist())
                 it.eligibleTwo =
-                    !(eligibleBefore || grandpas.dadOfDad.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist())
-                eligibleBefore = it.eligibleTwo
+                    !(!kalalah || siblings.fullBrothers.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist())
+                eligibleBefore = !it.eligibleTwo
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_sons_of_full_brothers)
             }
@@ -196,9 +206,10 @@ class Inheritance {
              * - sons of full brothers
              */
             nephews.sonsOfPaternalBrothers.forEach {
+                //                it.eligibleTwo = !(eligibleBefore || nephews.sonsOfFullBrothers.thatEligibleIsExist())
                 it.eligibleTwo =
-                    !(eligibleBefore || nephews.sonsOfFullBrothers.thatEligibleIsExist())
-                eligibleBefore = it.eligibleTwo
+                    !(!kalalah || siblings.fullBrothers.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist() || nephews.sonsOfFullBrothers.thatEligibleIsExist())
+                eligibleBefore = !it.eligibleTwo
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_sons_of_paternal_brothers)
             }
@@ -217,14 +228,15 @@ class Inheritance {
              * - sons of paternal brothers
              */
             uncles.fullBrothersOfDad.forEach {
+                //                it.eligibleTwo = !(eligibleBefore || nephews.sonsOfPaternalBrothers.thatEligibleIsExist())
                 it.eligibleTwo =
-                    !(eligibleBefore || nephews.sonsOfPaternalBrothers.thatEligibleIsExist())
+                    !(!kalalah || siblings.fullBrothers.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist() || nephews.sonsOfFullBrothers.thatEligibleIsExist() || nephews.sonsOfPaternalBrothers.thatEligibleIsExist())
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_full_brothers_of_dad)
             }
 
-            /**
-             * Paternal brothers of dad
+            /*
+             * Uncles : Paternal brothers of dad
              * is disentitled by
              * - dad
              * - dad of dad
@@ -238,14 +250,16 @@ class Inheritance {
              * - full brothers of dad
              */
             uncles.paternalBrothersOfDad.forEach {
-                it.eligibleTwo = !(eligibleBefore || siblings.fullBrothers.thatEligibleIsExist())
-                eligibleBefore = it.eligibleTwo
+                //                it.eligibleTwo = !(eligibleBefore || siblings.fullBrothers.thatEligibleIsExist())
+                it.eligibleTwo =
+                    !(!kalalah || siblings.fullBrothers.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist() || nephews.sonsOfFullBrothers.thatEligibleIsExist() || nephews.sonsOfPaternalBrothers.thatEligibleIsExist() || uncles.fullBrothersOfDad.thatEligibleIsExist())
+                eligibleBefore = !it.eligibleTwo
                 if (!it.eligibleTwo)
                     it.`in`.disentitler = context.getString(disentitled_paternal_brothers_of_dad)
             }
 
-            /**
-             * Sons of paternal brothers of dad
+            /*
+             * Male Cousins : Sons of paternal brothers of dad
              * is disentitled by
              * - dad
              * - dad of dad
@@ -260,8 +274,9 @@ class Inheritance {
              * - paternalBrothersOfDad
              */
             maleCousins.sonsOfPaternalBrothersOfDad.forEach {
+                //                it.eligibleTwo = !(eligibleBefore || uncles.paternalBrothersOfDad.thatEligibleIsExist())
                 it.eligibleTwo =
-                    !(eligibleBefore || uncles.paternalBrothersOfDad.thatEligibleIsExist())
+                    !(!kalalah || siblings.fullBrothers.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist() || nephews.sonsOfFullBrothers.thatEligibleIsExist() || nephews.sonsOfPaternalBrothers.thatEligibleIsExist() || uncles.fullBrothersOfDad.thatEligibleIsExist() || uncles.paternalBrothersOfDad.thatEligibleIsExist())
                 if (!it.eligibleTwo)
                     it.`in`.disentitler =
                         context.getString(disentitled_sons_of_paternal_brothers_of_dad)
@@ -369,9 +384,10 @@ class Inheritance {
                  * Paternal sisters
                  * get 1/2 if alone, kalalah,
                  * and the deceased didn't leave paternal brothers
+                 * and full sister
                  */
                 siblings.paternalSisters.thatEligible().let { list ->
-                    if (!kalalah || siblings.paternalBrothers.thatEligibleIsExist() || list.size > 1) return@let
+                    if (!kalalah || siblings.paternalBrothers.thatEligibleIsExist() || siblings.fullSisters.thatEligibleIsExist() || list.size > 1) return@let
                     shareIt(out, list, 1, 2)
                     explainIt(list, paternal_sister_1_2)
 //                    TODO('ga boleh ada full brother?')
@@ -751,17 +767,21 @@ class Inheritance {
                 /*
                  * Dad
                  */
-                dad.thatEligible().forEach {
-                    it.`in`.secondary += secondaryShareable
-                    return@shared
+                dad.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
+                    list.forEach {
+                        it.`in`.secondary = secondaryShareable
+                    }
                 }
 
                 /*
                  * Dad of dad
                  */
-                grandpas.dadOfDad.thatEligible().forEach {
-                    it.`in`.secondary = secondaryShareable
-                    return@shared
+                grandpas.dadOfDad.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
+                    list.forEach {
+                        it.`in`.secondary = secondaryShareable
+                    }
                 }
 
                 /*
@@ -769,7 +789,7 @@ class Inheritance {
                  * (and could be with full sisters)
                  */
                 siblings.fullBrothers.thatEligible().let { list ->
-                    if (list.isEmpty()) return@shared
+                    if (list.isEmpty()) return@let
 
                     /*
                      * Themeselves
@@ -803,41 +823,63 @@ class Inheritance {
                  * (and could be with paternal sister)
                  */
                 siblings.paternalBrothers.thatEligible().let { list ->
-                    list.forEach {
-                        it.`in`.secondary = secondaryShareable / list.size
+                    if (list.isEmpty()) return@let
+
+                    /*
+                     * Themeselves
+                     */
+                    if (!siblings.paternalSisters.thatEligibleIsExist()) {
+                        list.forEach {
+                            it.`in`.secondary += secondaryShareable / list.size
+                            it.`in`.two = context.getString(paternal_brothers_secondary)
+                        }
                     }
-                    if (list.isNotEmpty()) return@shared
-//                TODO("Are they could be sharing with paternal sisters or others?")
+
+                    /*
+                     * With paternal sisters
+                      */
+                    else {
+                        val totalSize =
+                            (list.size * 2) + siblings.paternalSisters.thatEligible().size
+                        list.forEach {
+                            it.`in`.secondary += secondaryShareable / totalSize * 2
+                            it.`in`.two = context.getString(paternal_brothers_secondary)
+                        }
+                        siblings.paternalSisters.thatEligible().forEach {
+                            it.`in`.secondary += secondaryShareable / totalSize
+                            it.`in`.two = context.getString(paternal_sisters_secondary)
+                        }
+                    }
                 }
 
                 /*
                  * Sons of full brothers
                  */
                 nephews.sonsOfFullBrothers.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
-                    if (list.isNotEmpty()) return@shared
                 }
 
                 /*
                  * Sons of paternal brothers
                  */
                 nephews.sonsOfPaternalBrothers.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
-                    if (list.isNotEmpty()) return@shared
                 }
 
                 /*
                  * Full brothers of dad
                  */
                 uncles.fullBrothersOfDad.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
-                    if (list.isNotEmpty()) return@shared
 
 //                    TODO('Could they shared with full sisters of dad?')
                 }
@@ -846,10 +888,10 @@ class Inheritance {
                  * Sons of full brothers of dad
                  */
                 maleCousins.sonsOfFullBrothersOfDad.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
-                    if (list.isNotEmpty()) return@shared
 //                    TODO('Could they shared with daughters of full brothers of dad?')
                 }
             }

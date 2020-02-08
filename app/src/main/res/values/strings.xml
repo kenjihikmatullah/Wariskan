@@ -47,7 +47,7 @@
         Full Sibling
     </string>
     <string name="paternal_sibling">
-        Peternal Sibling
+        Paternal Sibling
     </string>
     <string name="maternal_sibling">
         Maternal Sibling
@@ -278,6 +278,16 @@
         If deceased left full brother and full sister, they get
         ashabah, divided with ratio 2:1\n.
         (Full brothers get 2x more than full sisters)
+    </string>
+    <string name="paternal_brothers_secondary">
+        Paternal brothers get ashabah. Divided equally\n.
+        If there is also paternal sister, divided with ratio 2:1\n.
+        (Paternal brothers get 2x more than paternal sisters)
+    </string>
+    <string name="paternal_sisters_secondary">
+        If deceased left paternal brother and paternal sister, they get
+        ashabah, divided with ratio 2:1\n.
+        (Paternal brothers get 2x more than paternal sisters)
     </string>
 
     <!-- Ineligible -->
