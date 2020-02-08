@@ -27,7 +27,12 @@ class Inheritance {
 
     private val kalalah: Boolean
         get() {
-            return !(dad.thatEligibleIsExist() || children.sons.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist())
+            return !(dad.thatEligibleIsExist() || grandpas.dadOfDad.thatEligibleIsExist() || children.sons.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist())
+        }
+
+    private val spouses: List<Heir>
+        get() {
+            return husband + wives
         }
 
     @Embedded(prefix = "inheritee_")
@@ -157,6 +162,8 @@ class Inheritance {
 //                    !(children.sons.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist()
 //                            || dad.eligible || siblings.fullBrothers.thatEligibleIsExist())
 //            }
+
+//            TODO('')
 
             /**
              * Sons of full brothers
@@ -303,55 +310,72 @@ class Inheritance {
 
                 /*
                  * Husband
-                 * Suami mendapatkan 1/2 jika pewaris tidak mempunyai anak atau cucu.
+                 * gets 1/2 if the deceased didn't left child and child of son
                  * QS An Nisa : 12
-                 * KHI : 179
                  */
                 husband.thatEligible().let { husband ->
-                    if (children.children.isNotEmpty()) return@let
+                    if (husband.isEmpty()) return@let
+                    if (children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist()) return@let
                     shareIt(out, husband, 1, 2)
-                    husband.forEach { it.`in`.one = context.getString(husband_1_2) }
+                    explainIt(husband, husband_1_2)
                 }
 
                 /*
-                 * Daughters
-                 * Anak perempuan mendapatkan 1/2 jika sendiri dan pewaris tidak mempunyai anak atau cucu laki.
+                 * Daughter
+                 * get 1/2 if alone and the deceased didn't leave son
                  * QS An Nisa : 11
                  * KHI : 176
                  */
                 children.daughters.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
                     if (children.sons.isNotEmpty() || list.size > 1) return@let
                     shareIt(out, list, 1, 2)
-                    list.forEach { it.`in`.one = context.getString(daughter_1_2) }
+                    explainIt(list, daughter_1_2)
                 }
 
                 /*
-                 * Daughters of sons
+                 * Daughter of son
+                 * get 1/2 if alone and the deceased didn't leave
+                 * daughter and son of son
                  */
                 grandchildren.daughtersOfSons.thatEligible().let { list ->
-                    if (children.daughters.thatEligibleIsExist() || children.sons.thatEligibleIsExist() || list.size > 1) return@let
+                    if (list.isEmpty()) return@let
+
+                    /*
+                     * Violate the prerequisite
+                     */
+                    if (children.daughters.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist() || list.size > 1) return@let
                     shareIt(out, list, 1, 2)
-                    list.forEach { it.`in`.one = context.getString(daughter_of_son_1_2) }
+                    explainIt(list, daughter_of_son_1_2)
                 }
 
                 /*
-                 * Full sisters
-                 * Saudara perempuan seayah seibu mendapatkan 1/2 jika sendiri dan kalalah.
+                 * Full sister
+                 * get 1/2 if alone, kalalah, and
+                 * the deceased didn't leave full brother, daughter, and daughter of son
                  */
                 siblings.fullSisters.thatEligible().let { list ->
-                    if (!kalalah || list.size > 1) return@let
+
+                    /*
+                     * Violate the prerequisite
+                     */
+                    if (!kalalah || list.size > 1 || siblings.fullBrothers.thatEligibleIsExist() || children.daughters.thatEligibleIsExist() || grandchildren.daughtersOfSons.thatEligibleIsExist()) return@let
+
                     shareIt(out, list, 1, 2)
-                    list.forEach { it.`in`.one = context.getString(full_sister_1_2) }
+                    explainIt(list, full_sister_1_2)
                 }
 
                 /*
                  * Paternal sisters
-                 * get 1/2 if alone and no paternal brothers
+                 * get 1/2 if alone, kalalah,
+                 * and the deceased didn't leave paternal brothers
                  */
                 siblings.paternalSisters.thatEligible().let { list ->
                     if (!kalalah || siblings.paternalBrothers.thatEligibleIsExist() || list.size > 1) return@let
                     shareIt(out, list, 1, 2)
-                    list.forEach { it.`in`.one = context.getString(paternal_sister_1_2) }
+                    explainIt(list, paternal_sister_1_2)
+//                    TODO('ga boleh ada full brother?')
+//                    TODO('full sister itu ga boleh ada atau maks 1?')
                 }
             }
 
@@ -362,26 +386,27 @@ class Inheritance {
 
                 /*
                  * Husband
-                 * Suami mendapatkan 1/4 jika pewaris mempunyai anak atau cucu.
+                 * gets 1/4 if the deceased left child or child of son
                  * An Nisa (4) : 12
-                 * KHI : 180
                  */
-                husband.thatEligible().let {
-                    if (children.children.isEmpty()) return@let
-                    shareIt(out, it, 1, 4)
-                    husband.forEach { it.`in`.one = context.getString(husband_1_4) }
+                husband.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
+                    if (!(children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist())) return@let
+                    shareIt(out, list, 1, 4)
+                    explainIt(list, husband_1_4)
                 }
 
                 /*
                  * Wives
-                 * Istri mendapatkan 1/4 jika pewaris tidak mempunyai anak atau cucu.
-                 * Dibagi rata jika bersama.
+                 * get 1/4 if the deceased didn't leave child and child of son
+                 * Divided equally
                  * QS An Nisa : 12
                  */
                 wives.thatEligible().let { list ->
-                    if (children.children.isNotEmpty()) return@let
+                    if (list.isEmpty()) return@let
+                    if (children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist()) return@let
                     shareIt(out, list, 1, 4)
-                    wives.forEach { it.`in`.one = context.getString(wives_1_4) }
+                    explainIt(list, wives_1_4)
                 }
             }
 
@@ -392,14 +417,15 @@ class Inheritance {
 
                 /*
                  * Wives
-                 * Istri mendapatkan 1/8 jika pewaris mempunyai anak.
-                 * Dibagi rata jika bersama.
+                 * get 1/8 if the deceased left child or child of son
+                 * Divided equally.
                  * QS An Nisa : 12
                  */
                 wives.thatEligible().let { list ->
-                    if (children.children.isEmpty()) return@let
+                    if (list.isEmpty()) return@let
+                    if (!(children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist())) return@let
                     shareIt(out, list, 1, 8)
-                    wives.forEach { it.`in`.one = context.getString(wives_1_8) }
+                    explainIt(list, wives_1_8)
                 }
             }
 
@@ -410,48 +436,64 @@ class Inheritance {
 
                 /*
                  * Daughters
-                 * Anak perempuan mendapatkan 2/3 jika bersama dan tidak ada anak laki.
-                 * Dibagi rata.
-                 * An Nisa 4:11
-                 * KHI : 176
+                 * get 2/3 if together and the deceased didn't leave son.
+                 * Divided equally.
+                 * An Nisa 4 : 11
                  */
                 children.daughters.thatEligible().let { list ->
-                    if (children.sons.isNotEmpty() || list.size <= 1) return@let
+                    if (list.isEmpty()) return@let
+                    if (children.sons.thatEligibleIsExist() || list.size <= 1) return@let
                     shareIt(out, list, 2, 3)
-                    list.forEach { it.`in`.one = context.getString(full_sisters_2_3) }
+                    explainIt(list, daughters_2_3)
                 }
 
                 /*
                  * Daughters of sons
+                 * get 2/3 if together and the deceased didn't leave
+                 * daughter and son of son.
+                 * Divided equally.
                  */
                 grandchildren.daughtersOfSons.thatEligible().let { list ->
-                    if (children.daughters.thatEligible().isNotEmpty()) return@let
+                    if (list.isEmpty()) return@let
+
+                    /*
+                     * Violate the prerequisite
+                     */
+                    if (children.daughters.thatEligibleIsExist() || list.size < 2 || grandchildren.sonsOfSons.thatEligibleIsExist()) return@let
+
                     shareIt(out, list, 2, 3)
-                    list.forEach { it.`in`.one = context.getString(daughters_of_sons_2_3) }
-//                    TODO("How if sons is not empty?")
+                    explainIt(list, daughters_of_sons_2_3)
                 }
 
                 /*
                  * Full sisters
-                 * Saudara perempuan seayah seibu mendapatkan 2/3 jika bersama dan kalalah
-                 * Dibagi rata.
+                 * get 2/3 if together, kalalah, and
+                 * the deceased didn't leave full brother, daughter, and daughter of son
+                 * Divided equally.
                  */
                 siblings.fullSisters.thatEligible().let { list ->
-                    if (!kalalah || list.size <= 1) return@let
+                    if (list.isEmpty()) return@let
+
+                    /*
+                     * Violate the prerequisite
+                     */
+                    if (!kalalah || list.size < 2 || siblings.fullBrothers.thatEligibleIsExist() || children.daughters.thatEligibleIsExist() || grandchildren.daughtersOfSons.thatEligibleIsExist()) return@let
+
                     shareIt(out, list, 2, 3)
-                    list.forEach { it.`in`.one = context.getString(full_sisters_2_3) }
+                    explainIt(list, full_sisters_2_3)
                 }
 
                 /*
                  * Paternal sisters
-                 * Saudara perempuan seayah mendapatkan 2/3 jika bersama, kalalah, dan
-                 * pewaris tidak mempunyai saudara perempuan seayah seibu.
-                 * Dibagi rata.
+                 * get 2/3 if together, kalalah, and the deceased didn't leave
+                 * full sister and paternal brother.
+                 * Divided equally.
                  */
                 siblings.paternalSisters.thatEligible().let { list ->
-                    if (!kalalah || list.size <= 1 || siblings.fullSisters.thatEligible().isNotEmpty()) return@let
+                    if (list.isEmpty()) return@let
+                    if (!kalalah || list.size <= 1 || siblings.fullSisters.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist()) return@let
                     shareIt(out, list, 2, 3)
-                    list.forEach { it.`in`.one = context.getString(paternal_sisters_2_3) }
+                    explainIt(list, paternal_sisters_2_3)
                 }
             }
 
@@ -462,25 +504,29 @@ class Inheritance {
 
                 /*
                  * Mom
-                 * Ibu mendapatkan 1/3 jika pewaris tidak mempunyai anak dan tidak mempunyai saudara
+                 * get 1/3 if the deceased didn't leave child, child of son,
+                 * dad, spouse, and number of full sibling is < 2
                  * An Nisa 4:11
                  */
                 mom.thatEligible().let { list ->
-                    if (list.isEmpty() || children.children.isNotEmpty() || grandchildren.childrenOfSons.isNotEmpty() || siblings.fullSiblings.isNotEmpty()) return@let
+                    if (list.isEmpty() || children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist() || siblings.fullSiblings.thatEligibleIsMany() || dad.thatEligibleIsExist() || spouses.thatEligibleIsExist()) return@let
                     shareIt(out, list, 1, 3)
                     explainIt(list, mom_1_3)
                 }
 
                 /*
                  * Maternal siblings
-                 * Saudara seibu mendapatkan 1/3 jika bersama dan kalalah.
-                 * Dibagi rata.
+                 * get 1/3 if together and kalalah.
+                 * Divided equally.
+                 *
                  * QS An Nisa : 12
                  */
                 siblings.maternalSiblings.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
                     if (!kalalah || list.size <= 1) return@let
                     shareIt(out, list, 1, 3)
-                    list.forEach { it.`in`.one = context.getString(maternal_siblings_1_3) }
+                    explainIt(list, maternal_siblings_1_3)
+//                    TODO('Perlu ada syarat ga boleh ada paternal sibling, ndak?')
                 }
             }
 
@@ -491,79 +537,110 @@ class Inheritance {
 
                 /*
                  * Dad
-                 * gets 1/6 if the deceased left children or children of sons
+                 * gets 1/6 if the deceased left child or child of son
                  * QS An Nisa : 11
                  */
                 dad.thatEligible().let { list ->
                     if (list.isEmpty()) return@let
-                    if (!(children.children.thatEligibleIsExist() || (grandchildren.childrenOfSons.thatEligibleIsExist()))) return@let
+                    if (!(children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist())) return@let
                     shareIt(out, list, 1, 6)
                     explainIt(list, dad_1_6)
                 }
 
                 /*
                  * Mom
-                 * Ibu mendapatkan 1/6 jika pewaris mempunyai anak atau mempunyai beberapa saudara
+                 * gets 1/6 if the deceased left child
+                 * or child of son
+                 * or number of full siblings is > 1
                  * QS An Nisa : 11
                  */
                 mom.thatEligible().let { list ->
                     if (list.isEmpty()) return@let
-                    if (children.children.thatEligibleIsExist() || siblings.fullSiblings.thatEligibleIsMany()) {
+                    if (children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist() || siblings.fullSiblings.thatEligibleIsMany()) {
                         shareIt(out, list, 1, 6)
                         explainIt(list, mom_1_6)
                     }
+//                    TODO('Perlu ada spouse?')
                 }
 
                 /*
                  * Dad of dad
-                 * mendapatkan 1/6
-                 * but might be disentitled by dad
+                 * gets 1/6 if the deceased left child or child of son
                  */
                 grandpas.dadOfDad.thatEligible().let { list ->
-                    if (dad.thatEligibleIsExist()) return@let
+                    if (list.isEmpty()) return@let
+                    if (!children.children.thatEligibleIsExist() || !grandchildren.childrenOfSons.thatEligibleIsExist()) return@let
                     shareIt(out, list, 1, 6)
-                    list.forEach {
-                        it.`in`.one = context.getString(dad_of_dad_1_6)
-                    }
+                    explainIt(list, dad_of_dad_1_6)
                 }
 
                 /*
                  * Grandmas
+                 * gets 1/6 if the deceased left child
+                 * or number of full siblings is > 1
                  */
                 grandmas.grandmas.thatEligible().let { list ->
-                    if (children.children.thatEligibleIsExist() || siblings.fullSiblings.thatEligibleIsMany())
+                    if (children.children.thatEligibleIsExist() || siblings.fullSiblings.thatEligibleIsMany()) {
                         shareIt(out, list, 1, 6)
-                    list.forEach { it.`in`.one = context.getString(grandmas_1_6) }
+                        explainIt(list, grandmas_1_6)
+                    }
                 }
 
                 /*
                  * Daughters of sons
+                 * get 1/6 if the deceased left one daughter
                  */
                 grandchildren.daughtersOfSons.thatEligible().let { list ->
-                    if (children.daughters.size != 1) return@let
+                    if (list.isEmpty()) return@let
+                    if (children.daughters.thatEligible().size != 1) return@let
                     shareIt(out, list, 1, 6)
-                    list.forEach { it.`in`.one = context.getString(daughter_of_son_1_6) }
+                    explainIt(list, daughter_of_son_1_6)
+                }
+
+                /*
+                 * Full sisters
+                 * get 1/6 if alone, kalalah,
+                 * the deceased didn't leave full brother,
+                 * but the deceased left daughter or daughter of son
+                 * Divided equally.
+                 */
+                siblings.fullSisters.thatEligible().let { list ->
+                    if (list.isEmpty()) return@let
+
+                    /*
+                     * Violate the prerequisite
+                     */
+                    if (!kalalah || list.size > 1 || siblings.fullBrothers.thatEligibleIsExist() || !children.daughters.thatEligibleIsExist() || !grandchildren.daughtersOfSons.thatEligibleIsExist()) return@let
+
+                    shareIt(out, list, 1, 6)
+//                    TODO('Explain')
+//                    TODO('Could full brother get 1/6?')
+//                    TODO('Could full siblings get 1/3?')
                 }
 
                 /*
                  * Paternal sisters
+                 * get 1/6 if together, kalalah, and the deceased
+                 * left a full sister
                  */
                 siblings.paternalSisters.thatEligible().let { list ->
-                    if (siblings.fullSisters.size != 1 || list.size <= 1) return@let
+                    if (list.isEmpty()) return@let
+                    if (!kalalah || siblings.fullSisters.thatEligible().size != 1 || list.size <= 1) return@let
                     shareIt(out, list, 1, 6)
-                    list.forEach { it.`in`.one = context.getString(paternal_sisters_1_6) }
+                    explainIt(list, paternal_sisters_1_6)
                 }
 
                 /*
                  * Maternal siblings
-                 * Saudara seibu mendapatkan 1/6 jika sendiri dan kalalah.
-                 * Dibagi rata.
-                 * An Nisa 4:12
+                 * get 1/6 if alone and kalalah.
+                 * Divided equally.
+                 * An Nisa 4 : 12
                  */
                 siblings.maternalSiblings.thatEligible().let { list ->
-                    if (!kalalah || list.size <= 1) return@let
+                    if (list.isEmpty()) return@let
+                    if (!kalalah || list.size > 1) return@let
                     shareIt(out, list, 1, 6)
-                    list.forEach { it.`in`.one = context.getString(maternal_sibling_1_6) }
+                    explainIt(list, maternal_sibling_1_6)
                 }
             }
         }
@@ -572,15 +649,14 @@ class Inheritance {
 
             /*
              * When
-             * inheritee leaves dad and spouse,
+             * the deceased left dad and spouse(s),
              * after assigning the respective shares due to them,
-             * 1/3 of the Remainder will be assigned to the mother.
+             * 1/3 of the remainder will be assigned to mom.
              */
             if (mom.thatEligibleIsExist() && dad.thatEligibleIsExist() && (husband.thatEligibleIsExist() || wives.thatEligibleIsExist())) {
+                deceased.legacy.primaryShared -= mom[0].`in`.primary
                 mom[0].`in`.primary = 0.0
                 mom[0].`in`.one = ""
-                mom[0].`in`.special = context.getString(mom_special)
-
 
                 var spentToThem = dad[0].`in`.primary
                 if (husband.thatEligibleIsExist()) spentToThem += husband[0].`in`.primary
@@ -588,11 +664,12 @@ class Inheritance {
                     spentToThem += it.`in`.primary
                 }
 
-                ((deceased.legacy.shareable - spentToThem) / 3).let { toMom ->
-                    mom[0].`in`.specialAmount += toMom
-                    deceased.legacy.primaryShared += toMom
-                    mom[0].`in`.special = context.getString(mom_special)
-                }
+                val toMom = (deceased.legacy.shareable - spentToThem) / 3
+                Log.i("HEHEHE", "To mom $toMom")
+                mom[0].`in`.specialAmount += toMom
+                deceased.legacy.primaryShared += toMom
+                mom[0].`in`.special = context.getString(mom_special)
+
             }
         }
 
@@ -641,7 +718,7 @@ class Inheritance {
                  * (and could be with daughters of sons)
                  */
                 grandchildren.sonsOfSons.thatEligible().let { list ->
-                    if (list.isNotEmpty()) return@let
+                    if (list.isEmpty()) return@let
 
                     /*
                      * Themeselves
@@ -661,7 +738,7 @@ class Inheritance {
                             (list.size * 2) + grandchildren.daughtersOfSons.thatEligible().size
                         list.forEach {
                             it.`in`.secondary += secondaryShareable / totalSize * 2
-                            it.`in`.two = context.getString(son_secondary)
+                            it.`in`.two = context.getString(sons_of_sons_secondary)
                         }
                         grandchildren.daughtersOfSons.thatEligible().forEach {
                             it.`in`.secondary += secondaryShareable / totalSize
@@ -674,8 +751,8 @@ class Inheritance {
                 /*
                  * Dad
                  */
-                dad.thatEligible().let {
-                    it[0].`in`.secondary += secondaryShareable
+                dad.thatEligible().forEach {
+                    it.`in`.secondary += secondaryShareable
                     return@shared
                 }
 
@@ -689,24 +766,48 @@ class Inheritance {
 
                 /*
                  * Full brothers
+                 * (and could be with full sisters)
                  */
                 siblings.fullBrothers.thatEligible().let { list ->
-                    list.forEach {
-                        it.`in`.secondary += secondaryShareable / list.size
+                    if (list.isEmpty()) return@shared
+
+                    /*
+                     * Themeselves
+                     */
+                    if (!siblings.fullSisters.thatEligibleIsExist()) {
+                        list.forEach {
+                            it.`in`.secondary += secondaryShareable / list.size
+                            it.`in`.two = context.getString(full_brothers_secondary)
+                        }
                     }
-                    if (list.isNotEmpty()) return@shared
-//                TODO("Are they could be sharing with full sisters or others?")
+
+                    /*
+                     * With full sisters
+                      */
+                    else {
+                        val totalSize =
+                            (list.size * 2) + siblings.fullSisters.thatEligible().size
+                        list.forEach {
+                            it.`in`.secondary += secondaryShareable / totalSize * 2
+                            it.`in`.two = context.getString(full_brothers_secondary)
+                        }
+                        siblings.fullSisters.thatEligible().forEach {
+                            it.`in`.secondary += secondaryShareable / totalSize
+                            it.`in`.two = context.getString(full_sisters_secondary)
+                        }
+                    }
                 }
 
                 /*
                  * Paternal brothers
+                 * (and could be with paternal sister)
                  */
                 siblings.paternalBrothers.thatEligible().let { list ->
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
                     if (list.isNotEmpty()) return@shared
-//                TODO("Are they could be sharing with full sisters or others?")
+//                TODO("Are they could be sharing with paternal sisters or others?")
                 }
 
                 /*
@@ -737,6 +838,8 @@ class Inheritance {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
                     if (list.isNotEmpty()) return@shared
+
+//                    TODO('Could they shared with full sisters of dad?')
                 }
 
                 /*
@@ -747,6 +850,7 @@ class Inheritance {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
                     if (list.isNotEmpty()) return@shared
+//                    TODO('Could they shared with daughters of full brothers of dad?')
                 }
             }
         }

@@ -16,4 +16,5 @@ package com.kenji.waris.util
  *
  * English
  * https://www.sailanmuslim.com/inheritance-2/inheritance-according-to-islamic-sharia-law/
+ * http://www.inheritancecalculator.net/
  */

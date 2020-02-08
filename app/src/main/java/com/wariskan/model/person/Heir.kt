@@ -42,11 +42,14 @@ open class Heir : Person() {
 
     fun resetIn() {
         `in`.primary = 0.0
+        `in`.specialAmount = 0.0
         `in`.secondary = 0.0
+
         `in`.one = ""
         `in`.two = ""
         `in`.special = ""
         `in`.disentitler = ""
+
         eligibleTwo = true
     }
 

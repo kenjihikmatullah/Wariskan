@@ -241,7 +241,6 @@
         didn\'t leave son, daughter, or son of son. Divided equally
     </string>
 
-
     <!-- Special -->
     <string name="mom_special">
         Mom gets special amount if the deceased left dad and spouse.
@@ -269,6 +268,16 @@
         If deceased left son of son and daughter of son, they get
         ashabah, divided with ratio 2:1\n.
         (Sons of sons get 2x more than daughters of sons)
+    </string>
+    <string name="full_brothers_secondary">
+        Full brothers get ashabah. Divided equally\n.
+        If there is also full sister, divided with ratio 2:1\n.
+        (Full brothers get 2x more than full sisters)
+    </string>
+    <string name="full_sisters_secondary">
+        If deceased left full brother and full sister, they get
+        ashabah, divided with ratio 2:1\n.
+        (Full brothers get 2x more than full sisters)
     </string>
 
     <!-- Ineligible -->
