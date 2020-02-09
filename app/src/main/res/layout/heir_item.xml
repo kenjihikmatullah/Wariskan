@@ -43,6 +43,8 @@
                     style="@style/header_text"
                     android:layout_width="wrap_content"
                     android:text="@{heir.name}"
+                    android:maxLines="4"
+                    android:layout_marginRight="25dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

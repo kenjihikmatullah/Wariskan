@@ -1,5 +1,6 @@
 package com.wariskan.model.person
 
+import android.util.Log
 import com.kenji.waris.model.Heir
 import com.wariskan.model.property.Type.FULL
 import com.wariskan.model.property.Type.PATERNAL
@@ -38,10 +39,12 @@ class Uncle : Heir() {
 
     val spinnerTwo: Int
         get() {
-            return when (type) {
-                FULL -> 0
-                PATERNAL -> 1
+            Log.i("HEHEHE", "Type: $type")
+            return when {
+                type == FULL -> 0
+                type == PATERNAL -> 1
                 else -> 2
+
             }
         }
 }

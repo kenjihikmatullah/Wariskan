@@ -383,11 +383,12 @@ class Inheritance {
                 /*
                  * Paternal sisters
                  * get 1/2 if alone, kalalah,
-                 * and the deceased didn't leave paternal brothers
-                 * and full sister.
+                 * and the deceased didn't leave paternal brothers.
+                 * daughter, daughter of son,
+                 * full sister, and full brother.
                  */
                 siblings.paternalSisters.thatEligible().let { list ->
-                    if (!kalalah || siblings.paternalBrothers.thatEligibleIsExist() || siblings.fullSisters.thatEligibleIsExist() || list.size > 1) return@let
+                    if (list.size > 1 || !kalalah || children.daughters.thatEligibleIsExist() || grandchildren.daughtersOfSons.thatEligibleIsExist() || siblings.fullBrothers.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist() || siblings.fullSisters.thatEligibleIsExist()) return@let
                     shareIt(out, list, 1, 2)
                     explainIt(list, paternal_sister_1_2)
                 }
@@ -499,13 +500,14 @@ class Inheritance {
 
                 /*
                  * Paternal sisters
-                 * get 2/3 if together, kalalah, and the deceased didn't leave
-                 * full sister and paternal brother.
-                 * Divided equally.
+                 * get 1/2 if together, kalalah,
+                 * and the deceased didn't leave paternal brothers.
+                 * daughter, daughter of son,
+                 * full sister, and full brother.
                  */
                 siblings.paternalSisters.thatEligible().let { list ->
                     if (list.isEmpty()) return@let
-                    if (!kalalah || list.size <= 1 || siblings.fullSisters.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist()) return@let
+                    if (list.size <= 1 || !kalalah || children.daughters.thatEligibleIsExist() || grandchildren.daughtersOfSons.thatEligibleIsExist() || siblings.fullBrothers.thatEligibleIsExist() || siblings.fullSisters.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist()) return@let
                     shareIt(out, list, 2, 3)
                     explainIt(list, paternal_sisters_2_3)
                 }
@@ -519,11 +521,12 @@ class Inheritance {
                 /*
                  * Mom
                  * get 1/3 if the deceased didn't leave child, child of son,
-                 * dad, spouse, and number of full sibling is < 2
+                 * number of full sibling is < 2
                  * An Nisa 4:11
                  */
                 mom.thatEligible().let { list ->
-                    if (list.isEmpty() || children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist() || siblings.fullSiblings.thatEligibleIsMany() || dad.thatEligibleIsExist() || spouses.thatEligibleIsExist()) return@let
+                    if (list.isEmpty()) return@let
+                    if (children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist() || siblings.fullSiblings.thatEligibleIsMany()) return@let
                     shareIt(out, list, 1, 3)
                     explainIt(list, mom_1_3)
                 }
@@ -581,7 +584,7 @@ class Inheritance {
                  */
                 grandpas.dadOfDad.thatEligible().let { list ->
                     if (list.isEmpty()) return@let
-                    if (!children.children.thatEligibleIsExist() || !grandchildren.childrenOfSons.thatEligibleIsExist()) return@let
+                    if (!(children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist())) return@let
                     shareIt(out, list, 1, 6)
                     explainIt(list, dad_of_dad_1_6)
                 }
@@ -600,11 +603,13 @@ class Inheritance {
 
                 /*
                  * Daughters of sons
-                 * get 1/6 if the deceased left one daughter
+                 * get 1/6 if the deceased left one daughter and
+                 * didn't leave son of son
                  */
                 grandchildren.daughtersOfSons.thatEligible().let { list ->
                     if (list.isEmpty()) return@let
-                    if (children.daughters.thatEligible().size != 1) return@let
+
+                    if (children.daughters.thatEligible().size != 1 || grandchildren.sonsOfSons.thatEligibleIsExist()) return@let
                     shareIt(out, list, 1, 6)
                     explainIt(list, daughter_of_son_1_6)
                 }
@@ -630,13 +635,15 @@ class Inheritance {
 
                 /*
                  * Paternal sisters
-                 * get 1/6 if kalalah, the deceased
-                 * didn't leave paternal brother
-                 * left a full sister
+                 * get 1/2 if alone, kalalah,
+                 * the deceased left a full sister,
+                 * and the deceased didn't leave paternal brothers.
+                 * daughter, daughter of son,
+                 * and full brother.
                  */
                 siblings.paternalSisters.thatEligible().let { list ->
                     if (list.isEmpty()) return@let
-                    if (!kalalah || siblings.fullSisters.thatEligible().size != 1 || siblings.paternalBrothers.thatEligibleIsExist() || list.size <= 1) return@let
+                    if (list.size <= 1 || !kalalah || siblings.fullSisters.thatEligible().size != 1 || children.daughters.thatEligibleIsExist() || grandchildren.daughtersOfSons.thatEligibleIsExist() || siblings.fullBrothers.thatEligibleIsExist() || siblings.paternalBrothers.thatEligibleIsExist()) return@let
                     shareIt(out, list, 1, 6)
                     explainIt(list, paternal_sisters_1_6)
                 }
@@ -921,7 +928,7 @@ class Inheritance {
         /*
          * Add
         */
-        if (position in listOf(DAD, MOM) || order == -1) {
+        if (order == -1) {
             when (position) {
                 DAD -> dad.add(heir.apply { gender = MALE })
                 MOM -> mom.add(heir.apply { gender = FEMALE })
@@ -948,16 +955,16 @@ class Inheritance {
             when (position) {
                 DAD -> dad.add(heir.apply { gender = MALE })
                 MOM -> mom.add(heir.apply { gender = FEMALE })
-                HUSBAND -> husband[order] = heir
-                WIFE -> wives[order] = heir
+                HUSBAND -> husband[order] = heir.apply { gender = MALE }
+                WIFE -> wives[order] = heir.apply { gender = FEMALE }
                 CHILD -> children.children[order] = heir
                 SIBLING -> siblings.siblings[order] = heir as Sibling
-                GRANDPA -> grandpas.grandpas[order] = heir as Grandpa
-                GRANDMA -> grandmas.grandmas[order] = heir as Grandma
+                GRANDPA -> grandpas.grandpas[order] = heir.apply { gender = MALE } as Grandpa
+                GRANDMA -> grandmas.grandmas[order] = heir.apply { gender = FEMALE } as Grandma
                 GRANDCHILD -> grandchildren.grandchildren[order] = heir as Grandchild
-                UNCLE -> uncles.uncles[order] = heir as Uncle
-                MALE_COUSIN -> maleCousins.maleCousins[order] = heir as MaleCousin
-                NEPHEW -> nephews.nephews[order] = heir as Nephew
+                UNCLE -> uncles.uncles[order] = heir.apply { gender = MALE } as Uncle
+                MALE_COUSIN -> maleCousins.maleCousins[order] = heir.apply { gender = MALE } as MaleCousin
+                NEPHEW -> nephews.nephews[order] = heir.apply { gender = MALE } as Nephew
                 else -> 0.inc()
             }
         }

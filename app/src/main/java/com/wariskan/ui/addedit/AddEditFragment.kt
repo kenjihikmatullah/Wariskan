@@ -5,6 +5,7 @@ import android.R.layout.simple_spinner_item
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -461,10 +462,18 @@ class AddEditFragment() : Fragment(), OnItemSelectedListener {
                     genderSpinner -> spinnerGender = order
                     oneSpinner -> {
                         spinnerOne = order
+
+                        /**
+                         * twoSpinner
+                         * is only visible WHEN
+                         * oneSpineer is selected on FIRST choice
+                         */
                         if (position in listOf(UNCLE, MALE_COUSIN, NEPHEW)) {
                             two.visibility = if (order == 0) VISIBLE else GONE
                         }
-
+                    }
+                    twoSpinner -> {
+                        spinnerTwo = order
                     }
                     else -> 0.inc()
                 }

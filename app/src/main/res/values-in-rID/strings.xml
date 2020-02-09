@@ -37,7 +37,7 @@
     <string name="query_one_grandpa">Kakek dari jalur ayah?</string>
     <string name="query_one_male_cousin">Apakah ayahnya adalah saudara dari ayahnya almarhum?</string>
     <string name="query_one_nephew">Apakah ayahnya adalah saudara dari almarum?</string>
-    <string name="query_one_uncle">Paman dari jalur ayah?</string>
+    <string name="query_one_uncle">Apakah dia adalah saudara dari ayahnya almarhum?</string>
     <string name="query_sibling">Saudara apa?</string>
     <string name="uncle">Paman</string>
     <string name="et_blank">Harus diisi</string>

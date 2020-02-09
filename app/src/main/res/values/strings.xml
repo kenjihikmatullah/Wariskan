@@ -2,12 +2,7 @@
     <string name="add_edit_title" translatable="false">
         %1$s %2$s
     </string>
-
-    <!-- Name -->
     <string name="full_name">Full Name</string>
-    <string name="lifetime">Lifetime</string>
-
-    <!-- Legacy -->
     <string name="legacy">Legacy</string>
 
     <!-- Gender -->
@@ -162,51 +157,55 @@
     </string>
     <string name="mom_1_3">
         Mom gets 1/3 if the deceased didn\'t leave child,
-        grandchild, and number of sibling is less than two (An Nisa : 11)
+        child of son, and number of sibling is less than two (An Nisa : 11)
     </string>
     <string name="mom_1_6">
-        Mom gets 1/6 if the deceased left child, grandchild,
-        or number of siblings are two or more (An Nisa : 11)
+        Mom gets 1/6 if the deceased left child, child of son,
+        or number of sibling is more than one (An Nisa : 11)
     </string>
     <string name="husband_1_2">
         Husband gets 1/2 if the deceased didn\'t left child
-        and grandchild (An Nisa : 12)
+        and child of son (An Nisa : 12)
     </string>
     <string name="husband_1_4">
         Husband gets 1/4 if the deceased left child or
-        grandchild (An Nisa : 12)
+        child of son (An Nisa : 12)
     </string>
     <string name="wives_1_4">
-        Wives get 1/4 if the deceased didn\'t leave child and grandchild.
+        Wives get 1/4 if the deceased didn\'t leave child and child of son.
         Divided equally if more than one (An Nisa : 12)
     </string>
     <string name="wives_1_8">
-        Wives get 1/8 if the deceased left child or grandchild.
+        Wives get 1/8 if the deceased left child or child of son.
         Divided equally if more than one (An Nisa : 12)
     </string>
     <string name="daughter_1_2">
         Daughter gets 1/2 if alone and the deceased didn\'t
-        leave sons and sons of sons (An Nisa : 11)
+        leave son (An Nisa : 11)
     </string>
     <string name="daughters_2_3">
-        Daughters gets 2/3 if more than one and the deceased didn\'t
-        leave sons and sons of sons. Divided equally (An Nisa : 11)
+        Daughters get 2/3 if more than one and the deceased didn\'t
+        leave son. Divided equally (An Nisa : 11)
     </string>
     <string name="full_sister_1_2">
         Full sister gets 1/2 if alone, kalalah, and the deceased
-        didn\'t leave full brother (An Nisa : 176)
+        didn\'t leave full brother, daughter, and daughter of son
+        (An Nisa : 176)
     </string>
     <string name="full_sisters_2_3">
         Full sisters get 2/3 if more than one, kalalah, and the deceased
-        didn\'t leave full brother (An Nisa : 176)
+        didn\'t leave full brother, daughter, and daughter of son.
+        (An Nisa : 176)
     </string>
     <string name="paternal_sister_1_2">
         Paternal sister gets 1/2 if alone, kalalah, and the deceased
-        didn\'t leave full brother, full sister, and paternal brother
+        didn\'t leave daughter, daughter of son, full brother,
+        full sister, and paternal brother.
     </string>
     <string name="paternal_sisters_2_3">
-        Paternal sisters get 2/3 if more than one, kalalah, and the deceased
-        didn\'t leave full brother, full sister, and paternal brother
+        Paternal sisters get 2/3 if more than one, kalalah,  and the deceased
+        didn\'t leave daughter, daughter of son, full brother,
+        full sister, and paternal brother.
     </string>
     <string name="paternal_sisters_1_6">
         Paternal sisters get 1/6 if kalalah, the deceased left only
@@ -215,30 +214,31 @@
     </string>
     <string name="maternal_siblings_1_3">
         Maternal siblings get 1/3 if more than one and kalalah.
-        Divided equally
+        Divided equally. (An Nisa : 12)
     </string>
     <string name="maternal_sibling_1_6">
-        Maternal sibling gets 1/6 if alone and kalalah
+        Maternal sibling gets 1/6 if alone and kalalah. (An Nisa : 12)
     </string>
     <string name="dad_of_dad_1_6">
         Dad of dad gets 1/6 if the deceased didn\'t leave dad,
-        child, and grandchild
+        child, and child of son
     </string>
     <string name="grandmas_1_6">
-        Grandmas get 1/6. Divided equally if more than one
+        Grandmas get 1/6 if the deceased left child, child of son,
+        or number of sibling is more than one.
+        Divided equally if more than one
     </string>
     <string name="daughter_of_son_1_2">
         Daughter of son gets 1/2 if alone and the deceased didn\'t
-        leave son, daughter, and son of son
+        leave daughter and son of son
     </string>
     <string name="daughter_of_son_1_6">
-        Daughter of son gets 1/6 if the deceased left only
-        a daughter and the deceased did\'t left son and
-        son of son
+        Daughter of son gets 1/6 if the deceased left
+        a daughter and the deceased did\'t leave son of son
     </string>
     <string name="daughters_of_sons_2_3">
         Daughters of sons get 2/3 if more than one and the deceased
-        didn\'t leave son, daughter, or son of son. Divided equally
+        didn\'t leave daughter and son of son. Divided equally.
     </string>
 
     <!-- Special -->
