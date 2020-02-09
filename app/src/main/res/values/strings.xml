@@ -243,9 +243,9 @@
 
     <!-- Special -->
     <string name="mom_special">
-        Mom gets special amount if the deceased left dad and spouse.
-        That is 1/3 of the remaining of the legacy after it\'s shared
-        to both of dad and spouse
+        Mom gets special amount (Umar\'s Fatwa). If the deceased left dad
+        and spouse, but didn\'t leave offspring, mom gets 1/3 of the remaining
+        of the legacy after it\'s shared to spouse.
     </string>
 
     <!-- Secondary -->
@@ -263,6 +263,10 @@
         Sons of sons get ashabah. Divided equally\n.
         If there is also daughters of sons, divided with ratio 2:1\n.
         (Sons of sons get 2x more than daughters of sons)
+    </string>
+    <string name="dad_secondary">
+        Dad gets ashabah if the deceased didn\'t leave
+        son and son of son.
     </string>
     <string name="daughters_of_sons_secondary">
         If deceased left son of son and daughter of son, they get

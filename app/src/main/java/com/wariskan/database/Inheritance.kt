@@ -384,14 +384,12 @@ class Inheritance {
                  * Paternal sisters
                  * get 1/2 if alone, kalalah,
                  * and the deceased didn't leave paternal brothers
-                 * and full sister
+                 * and full sister.
                  */
                 siblings.paternalSisters.thatEligible().let { list ->
                     if (!kalalah || siblings.paternalBrothers.thatEligibleIsExist() || siblings.fullSisters.thatEligibleIsExist() || list.size > 1) return@let
                     shareIt(out, list, 1, 2)
                     explainIt(list, paternal_sister_1_2)
-//                    TODO('ga boleh ada full brother?')
-//                    TODO('full sister itu ga boleh ada atau maks 1?')
                 }
             }
 
@@ -542,8 +540,7 @@ class Inheritance {
                     if (!kalalah || list.size <= 1) return@let
                     shareIt(out, list, 1, 3)
                     explainIt(list, maternal_siblings_1_3)
-//                    TODO('Perlu ada syarat ga boleh ada paternal sibling, ndak?')
-                }
+              }
             }
 
             /*
@@ -576,7 +573,6 @@ class Inheritance {
                         shareIt(out, list, 1, 6)
                         explainIt(list, mom_1_6)
                     }
-//                    TODO('Perlu ada spouse?')
                 }
 
                 /*
@@ -620,28 +616,27 @@ class Inheritance {
                  * but the deceased left daughter or daughter of son
                  * Divided equally.
                  */
-                siblings.fullSisters.thatEligible().let { list ->
-                    if (list.isEmpty()) return@let
-
-                    /*
-                     * Violate the prerequisite
-                     */
-                    if (!kalalah || list.size > 1 || siblings.fullBrothers.thatEligibleIsExist() || !children.daughters.thatEligibleIsExist() || !grandchildren.daughtersOfSons.thatEligibleIsExist()) return@let
-
-                    shareIt(out, list, 1, 6)
-//                    TODO('Explain')
-//                    TODO('Could full brother get 1/6?')
-//                    TODO('Could full siblings get 1/3?')
-                }
+//                siblings.fullSisters.thatEligible().let { list ->
+//                    if (list.isEmpty()) return@let
+//
+//                    /*
+//                     * Violate the prerequisite
+//                     */
+//                    if (!kalalah || list.size > 1 || siblings.fullBrothers.thatEligibleIsExist() || !children.daughters.thatEligibleIsExist() || !grandchildren.daughtersOfSons.thatEligibleIsExist()) return@let
+//
+//                    shareIt(out, list, 1, 6)
+//                    explainIt(list, full)
+//                }
 
                 /*
                  * Paternal sisters
-                 * get 1/6 if together, kalalah, and the deceased
+                 * get 1/6 if kalalah, the deceased
+                 * didn't leave paternal brother
                  * left a full sister
                  */
                 siblings.paternalSisters.thatEligible().let { list ->
                     if (list.isEmpty()) return@let
-                    if (!kalalah || siblings.fullSisters.thatEligible().size != 1 || list.size <= 1) return@let
+                    if (!kalalah || siblings.fullSisters.thatEligible().size != 1 || siblings.paternalBrothers.thatEligibleIsExist() || list.size <= 1) return@let
                     shareIt(out, list, 1, 6)
                     explainIt(list, paternal_sisters_1_6)
                 }
@@ -665,23 +660,27 @@ class Inheritance {
 
             /*
              * When
-             * the deceased left dad and spouse(s),
-             * after assigning the respective shares due to them,
+             * the deceased left mom, dad and spouse(s),
+             * but didn't leave child and child of son,
+             * after assigning the prescribed shares to spouse(s),
              * 1/3 of the remainder will be assigned to mom.
              */
-            if (mom.thatEligibleIsExist() && dad.thatEligibleIsExist() && (husband.thatEligibleIsExist() || wives.thatEligibleIsExist())) {
+            if (mom.thatEligibleIsExist() && dad.thatEligibleIsExist() && spouses.thatEligibleIsExist()) {
+
+                /*
+                 * Reset mom's in
+                 */
                 deceased.legacy.primaryShared -= mom[0].`in`.primary
                 mom[0].`in`.primary = 0.0
                 mom[0].`in`.one = ""
 
-                var spentToThem = dad[0].`in`.primary
+                var spentToThem = 0.0
                 if (husband.thatEligibleIsExist()) spentToThem += husband[0].`in`.primary
                 if (wives.thatEligibleIsExist()) wives.thatEligible().forEach {
                     spentToThem += it.`in`.primary
                 }
 
                 val toMom = (deceased.legacy.shareable - spentToThem) / 3
-                Log.i("HEHEHE", "To mom $toMom")
                 mom[0].`in`.specialAmount += toMom
                 deceased.legacy.primaryShared += toMom
                 mom[0].`in`.special = context.getString(mom_special)
@@ -762,6 +761,8 @@ class Inheritance {
                         }
                     }
 
+//                    TODO('Could they shared with daughter of son')
+
                 }
 
                 /*
@@ -771,6 +772,7 @@ class Inheritance {
                     if (list.isEmpty()) return@let
                     list.forEach {
                         it.`in`.secondary = secondaryShareable
+                        it.`in`.two = context.getString(dad_secondary)
                     }
                 }
 
@@ -789,7 +791,7 @@ class Inheritance {
                  * (and could be with full sisters)
                  */
                 siblings.fullBrothers.thatEligible().let { list ->
-                    if (list.isEmpty()) return@let
+                    val totalSize = (list.size * 2) + siblings.fullSisters.thatEligible().size
 
                     /*
                      * Themeselves
@@ -805,8 +807,6 @@ class Inheritance {
                      * With full sisters
                       */
                     else {
-                        val totalSize =
-                            (list.size * 2) + siblings.fullSisters.thatEligible().size
                         list.forEach {
                             it.`in`.secondary += secondaryShareable / totalSize * 2
                             it.`in`.two = context.getString(full_brothers_secondary)
@@ -816,6 +816,8 @@ class Inheritance {
                             it.`in`.two = context.getString(full_sisters_secondary)
                         }
                     }
+
+                    if (totalSize > 0) return@shared
                 }
 
                 /*
@@ -823,7 +825,7 @@ class Inheritance {
                  * (and could be with paternal sister)
                  */
                 siblings.paternalBrothers.thatEligible().let { list ->
-                    if (list.isEmpty()) return@let
+                    val totalSize = (list.size * 2) + siblings.paternalSisters.thatEligible().size
 
                     /*
                      * Themeselves
@@ -839,8 +841,6 @@ class Inheritance {
                      * With paternal sisters
                       */
                     else {
-                        val totalSize =
-                            (list.size * 2) + siblings.paternalSisters.thatEligible().size
                         list.forEach {
                             it.`in`.secondary += secondaryShareable / totalSize * 2
                             it.`in`.two = context.getString(paternal_brothers_secondary)
@@ -850,6 +850,8 @@ class Inheritance {
                             it.`in`.two = context.getString(paternal_sisters_secondary)
                         }
                     }
+
+                    if (totalSize > 0) return@shared
                 }
 
                 /*
