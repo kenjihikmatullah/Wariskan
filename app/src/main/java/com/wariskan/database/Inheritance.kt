@@ -760,9 +760,6 @@ class Inheritance {
                             it.`in`.two = context.getString(daughters_of_sons_secondary)
                         }
                     }
-
-//                    TODO('Could they shared with daughter of son')
-
                 }
 
                 /*
@@ -882,8 +879,6 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
-
-//                    TODO('Could they shared with full sisters of dad?')
                 }
 
                 /*
@@ -894,7 +889,6 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
-//                    TODO('Could they shared with daughters of full brothers of dad?')
                 }
             }
         }

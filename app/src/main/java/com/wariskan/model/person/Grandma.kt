@@ -9,4 +9,12 @@ class Grandma : Heir(){
      * parent of the deceased's dad?
      */
     var boolOne = false
+
+    val spinnerOne: Int
+        get() {
+            return when (boolOne) {
+                true -> 0
+                else -> 1
+            }
+        }
 }

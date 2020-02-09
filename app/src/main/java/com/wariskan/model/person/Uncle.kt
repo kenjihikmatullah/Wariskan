@@ -2,6 +2,7 @@ package com.wariskan.model.person
 
 import com.kenji.waris.model.Heir
 import com.wariskan.model.property.Type.FULL
+import com.wariskan.model.property.Type.PATERNAL
 
 class Uncle : Heir() {
 
@@ -26,4 +27,21 @@ class Uncle : Heir() {
     var boolThree = false
 
     var type = FULL
+
+    val spinnerOne: Int
+        get() {
+            return when (boolOne) {
+                true -> 0
+                else -> 1
+            }
+        }
+
+    val spinnerTwo: Int
+        get() {
+            return when (type) {
+                FULL -> 0
+                PATERNAL -> 1
+                else -> 2
+            }
+        }
 }

@@ -45,7 +45,7 @@ class AddEditFragment() : Fragment(), OnItemSelectedListener {
     private lateinit var activity: AddEditActivity
     private lateinit var binding: Binding
     private lateinit var viewModel: ViewModel
-    private var done = false
+//    private var done = false
 
     override fun onCreateView(
         inflater: Inflater,
@@ -220,9 +220,9 @@ class AddEditFragment() : Fragment(), OnItemSelectedListener {
                 /*
                  * Delete
                  */
-                if (!isEditing || !position.isHavingDelete) {
-                    deleteButton.visibility = GONE
-                }
+//                if (!isEditing || !position.isHavingDelete) {
+//                    deleteButton.visibility = GONE
+//                }
 
                 /*
                  * Observe
@@ -235,30 +235,58 @@ class AddEditFragment() : Fragment(), OnItemSelectedListener {
                      * Deceased
                      */
                         if (position == DECEASED) {
-                            val deceased = inheritance.deceased
-                            nameEt.setText(deceased.name)
-                            faithSpinner.setSelection(if (deceased.muslim) 0 else 1)
-                            genderSpinner.setSelection(if (deceased.gender == MALE) 0 else 1)
+                            inheritance.deceased.let {
+                                nameEt.setText(it.name)
+//                                faithSpinner.setSelection(if (it.muslim) 0 else 1)
+                            }
                         }
 
                         /*
                      * Heir
                      */
                         else {
-                            val heir = inheritance.getHeir(position, order)
-                            nameEt.setText(heir.name)
-                            faithSpinner.setSelection(if (heir.muslim) 0 else 1)
-                            if (heir.gender == MALE) {
-                                genderSpinner.setSelection(0)
-                            } else {
-                                genderSpinner.setSelection(1)
+                            inheritance.getHeir(position, order).let {
+                                nameEt.setText(it.name)
+                                statusSpinner.setSelection(if (it.alive) 0 else 1)
+                                faithSpinner.setSelection(if (it.muslim) 0 else 1)
+                                genderSpinner.setSelection(if (it.gender == MALE) 0 else 1)
+
+                                if (it is Sibling) {
+                                    oneSpinner.setSelection(it.spinnerOne)
+                                }
+
+                                if (it is Grandpa) {
+                                    oneSpinner.setSelection(it.spinnerOne)
+                                }
+
+                                if (it is Grandma) {
+                                    oneSpinner.setSelection(it.spinnerOne)
+                                }
+
+                                if (it is Grandchild) {
+                                    oneSpinner.setSelection(it.spinnerOne)
+                                }
+
+                                if (it is Uncle) {
+                                    oneSpinner.setSelection(it.spinnerOne)
+                                    twoSpinner.setSelection(it.spinnerTwo)
+                                }
+
+                                if (it is MaleCousin) {
+                                    oneSpinner.setSelection(it.spinnerOne)
+                                    twoSpinner.setSelection(it.spinnerTwo)
+                                }
+
+                                if (it is Nephew) {
+                                    oneSpinner.setSelection(it.spinnerOne)
+                                    twoSpinner.setSelection(it.spinnerTwo)
+                                }
                             }
                         }
                     })
                 }
             }
         }
-
     }
 
     private fun setOnSave() {
@@ -267,7 +295,6 @@ class AddEditFragment() : Fragment(), OnItemSelectedListener {
 
             viewModel.apply {
                 binding.apply {
-
 
                     /*
                      * Get data from layout
@@ -446,6 +473,6 @@ class AddEditFragment() : Fragment(), OnItemSelectedListener {
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO()
+
     }
 }

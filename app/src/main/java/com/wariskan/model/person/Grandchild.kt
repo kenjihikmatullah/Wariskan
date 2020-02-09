@@ -11,4 +11,13 @@ class Grandchild : Heir() {
      * son of the deceased?
      */
     var boolOne = false
+
+
+    val spinnerOne: Int
+        get() {
+            return when (boolOne) {
+                true -> 0
+                else -> 1
+            }
+        }
 }

@@ -27,13 +27,13 @@
             android:paddingTop="20dp"
             android:paddingRight="20dp">
 
+            <!-- Header TODO('Convert to toolbar') -->
             <TextView
                 android:id="@+id/header_text"
                 android:layout_margin="10dp"
                 tools:text="Position"
                 android:textColor="@color/primaryLightColor"
                 style="@style/header_text" />
-
 
             <!-- Name -->
             <com.google.android.material.textfield.TextInputLayout
@@ -181,8 +181,9 @@
                 android:textColor="@android:color/white"
                 android:text="@string/save" />
 
-            <!-- Delete -->
+            <!-- Delete(gone) -->
             <Button
+                android:visibility="gone"
                 android:textColor="@android:color/white"
                 android:id="@+id/delete_button"
                 style="@style/match_wrap"

@@ -18,4 +18,13 @@ class Sibling : Heir() {
     var boolTwo = false
 
     var type = FULL
+
+    val spinnerOne: Int
+        get() {
+            return when (type) {
+                FULL -> 0
+                PATERNAL -> 1
+                else -> 2
+            }
+        }
 }

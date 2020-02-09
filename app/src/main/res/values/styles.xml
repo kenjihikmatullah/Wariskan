@@ -37,7 +37,6 @@
     </style>
 
     <style name="row_layout" parent="wrap_wrap">
-        <item name="android:layout_marginTop">20dp</item>
     </style>
 
     <style name="row_image">

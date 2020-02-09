@@ -119,6 +119,7 @@
                 <RelativeLayout
                     android:id="@+id/faith_layout"
                     style="@style/row_layout"
+                    android:layout_marginLeft="10dp"
                     app:layout_constraintLeft_toRightOf="@id/guideline"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -146,6 +147,7 @@
                 <RelativeLayout
                     android:id="@+id/gender_layout"
                     style="@style/row_layout"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/status_layout">
 
@@ -169,8 +171,10 @@
 
                 <!-- In -->
                 <RelativeLayout
+                    android:layout_marginTop="20dp"
                     android:id="@+id/in_layout"
                     style="@style/row_layout"
+                    android:layout_marginLeft="10dp"
                     app:layout_constraintLeft_toRightOf="@id/guideline"
                     app:layout_constraintTop_toBottomOf="@id/faith_layout">
 
