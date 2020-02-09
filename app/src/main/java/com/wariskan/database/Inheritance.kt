@@ -672,7 +672,12 @@ class Inheritance {
              * after assigning the prescribed shares to spouse(s),
              * 1/3 of the remainder will be assigned to mom.
              */
-            if (mom.thatEligibleIsExist() && dad.thatEligibleIsExist() && spouses.thatEligibleIsExist()) {
+            mom.thatEligible().let { mom ->
+
+                /*
+                 * Prerequisites
+                 */
+                if (!dad.thatEligibleIsExist() || !spouses.thatEligibleIsExist() || children.children.thatEligibleIsExist() || grandchildren.childrenOfSons.thatEligibleIsExist()) return@let
 
                 /*
                  * Reset mom's in
@@ -681,17 +686,22 @@ class Inheritance {
                 mom[0].`in`.primary = 0.0
                 mom[0].`in`.one = ""
 
-                var spentToThem = 0.0
-                if (husband.thatEligibleIsExist()) spentToThem += husband[0].`in`.primary
+                /*
+                 * Spent to spouse
+                 */
+                var spentToSpouses = 0.0
+                if (husband.thatEligibleIsExist()) spentToSpouses += husband[0].`in`.primary
                 if (wives.thatEligibleIsExist()) wives.thatEligible().forEach {
-                    spentToThem += it.`in`.primary
+                    spentToSpouses += it.`in`.primary
                 }
 
-                val toMom = (deceased.legacy.shareable - spentToThem) / 3
+                /*
+                 * To mom
+                 */
+                val toMom = (deceased.legacy.shareable - spentToSpouses) / 3
                 mom[0].`in`.specialAmount += toMom
                 deceased.legacy.primaryShared += toMom
                 mom[0].`in`.special = context.getString(mom_special)
-
             }
         }
 
@@ -732,7 +742,7 @@ class Inheritance {
                     }
 
 
-                    return@shared
+                    if (sons.isNotEmpty()) return@shared
                 }
 
                 /*
@@ -767,6 +777,8 @@ class Inheritance {
                             it.`in`.two = context.getString(daughters_of_sons_secondary)
                         }
                     }
+
+                    if (list.isNotEmpty()) return@shared
                 }
 
                 /*
@@ -778,6 +790,7 @@ class Inheritance {
                         it.`in`.secondary = secondaryShareable
                         it.`in`.two = context.getString(dad_secondary)
                     }
+                    if (list.isNotEmpty()) return@shared
                 }
 
                 /*
@@ -788,6 +801,7 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable
                     }
+                    if (list.isNotEmpty()) return@shared
                 }
 
                 /*
@@ -866,6 +880,7 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
+                    if (list.isNotEmpty()) return@shared
                 }
 
                 /*
@@ -876,6 +891,7 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
+                    if (list.isNotEmpty()) return@shared
                 }
 
                 /*
@@ -886,6 +902,7 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
+                    if (list.isNotEmpty()) return@shared
                 }
 
                 /*

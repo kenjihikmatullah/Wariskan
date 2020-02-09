@@ -2,8 +2,12 @@
     <string name="add_edit_title" translatable="false">
         %1$s %2$s
     </string>
+    <string name="legacy_details_header">
+        %1$s : %2$s
+    </string>
     <string name="full_name">Full Name</string>
-    <string name="legacy">Legacy</string>
+    <string name="app_name">Wariskan</string>
+    <string name="home_instruction">Click add button to start</string>
 
     <!-- Gender -->
     <string name="gender">Gender</string>
@@ -147,6 +151,9 @@
     <string name="obtained">Obtained</string>
 
     <!-- Primaries -->
+    <string name="ashabul_furudh">
+        Ashabul Furudh
+    </string>
     <string name="dad_1_3">
         Dad gets 1/3 if the deceased didn\'t leave child
         and grandchild (An Nisa : 11)
@@ -242,20 +249,26 @@
     </string>
 
     <!-- Special -->
+    <string name="special">
+        Special
+    </string>
     <string name="mom_special">
         Mom gets special amount (Umar\'s Fatwa). If the deceased left dad
-        and spouse, but didn\'t leave offspring, mom gets 1/3 of the remaining
+        and spouse, but didn\'t leave child and child of son, mom gets 1/3 of the remaining
         of the legacy after it\'s shared to spouse.
     </string>
 
     <!-- Secondary -->
+    <string name="ashabah">
+        Ashabah
+    </string>
     <string name="son_secondary">
-        Son get ashabah. Divided equally\n.
+        Sons get ashabah. Divided equally\n.
         If there is also daughter, divided with ratio 2:1\n.
         (Son get 2x more than daughter)
     </string>
     <string name="daughter_secondary">
-        If deceased left son and daughter, they get
+        Sons and daughters get
         ashabah, divided with ratio 2:1\n.
         (Son get 2x more than daughter)
     </string>
@@ -269,9 +282,9 @@
         son and son of son.
     </string>
     <string name="daughters_of_sons_secondary">
-        If deceased left son of son and daughter of son, they get
+        Sons of sons and daughters of sons get
         ashabah, divided with ratio 2:1\n.
-        (Sons of sons get 2x more than daughters of sons)
+        (Son of son get 2x more than daughter of son)
     </string>
     <string name="full_brothers_secondary">
         Full brothers get ashabah. Divided equally\n.
@@ -279,22 +292,23 @@
         (Full brothers get 2x more than full sisters)
     </string>
     <string name="full_sisters_secondary">
-        If deceased left full brother and full sister, they get
+        Full brothers and full sisters get
         ashabah, divided with ratio 2:1\n.
-        (Full brothers get 2x more than full sisters)
+        (Full brother get 2x more than full sister)
     </string>
     <string name="paternal_brothers_secondary">
         Paternal brothers get ashabah. Divided equally\n.
         If there is also paternal sister, divided with ratio 2:1\n.
-        (Paternal brothers get 2x more than paternal sisters)
+        (Paternal brother get 2x more than paternal sister)
     </string>
     <string name="paternal_sisters_secondary">
-        If deceased left paternal brother and paternal sister, they get
+        Paternal brothers and paternal sisters get
         ashabah, divided with ratio 2:1\n.
-        (Paternal brothers get 2x more than paternal sisters)
+        (Paternal brother get 2x more than paternal sister)
     </string>
 
     <!-- Ineligible -->
+    <string name="ineligible">Ineligible</string>
     <string name="ineligible_status">
         Heir who have died is not eligible to get the legacy
     </string>
@@ -307,6 +321,7 @@
     </string>
 
     <!-- Disentitled -->
+    <string name="disentitled">Disentitled</string>
     <string name="disentitled_children_of_sons">
         Children of sons are disentitled if
         the deceased left sons
@@ -361,16 +376,12 @@
         full brotbers of dad, and <b>paternal brothers of dad</b>
     </string>
 
-    <!-- Instruction -->
+    <!-- Legacy -->
+    <string name="legacy">Legacy</string>
     <string name="legacy_instruction">
         Fill the amount of legacy to be shared
     </string>
     <string name="calculated_instruction">You can see the results in each heir profile</string>
     <string name="calculated_title">Calculated!</string>
-    <string name="home_instruction">Click add button to start</string>
-
-
-    <string name="app_name">Wariskan</string>
-    <string name="ineligible">Ineligible</string>
-    <string name="disentitled">Disentitled</string>
+    <string name="correction_text">Any mistake can be reported to iniemailkenji@gmail.com</string>
 </resources>

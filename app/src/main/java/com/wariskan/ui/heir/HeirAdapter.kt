@@ -17,16 +17,20 @@ import com.wariskan.R.drawable.baseline_expand_more_white_24
 import com.wariskan.R.id.delete
 import com.wariskan.R.id.edit
 import com.wariskan.R.menu.heir_popup_menu
+import com.wariskan.R.string.*
 import com.wariskan.databinding.HeirItemBinding
 import com.wariskan.databinding.HeirItemBinding.inflate
 import com.wariskan.ui.heir.HeirAdapter.ViewHolder
+import com.wariskan.util.getLocale
+import java.text.NumberFormat
+import java.text.NumberFormat.getNumberInstance
+import kotlin.math.floor
 
 /**
  * Adapter
  * for heir item in recycler view
  */
-class HeirAdapter(private val listener: Listener)
-    : ListAdapter<Heir, ViewHolder>(DiffCallback()) {
+class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder>(DiffCallback()) {
 
     class Listener(
         val editUnit: (order: Int) -> Unit,
@@ -73,6 +77,10 @@ class HeirAdapter(private val listener: Listener)
      */
     override fun onBindViewHolder(holder: ViewHolder, order: Int) {
         holder.binding.let {
+
+            /*
+             * Layout variables
+             */
             val item = getItem(order)
             it.heir = item
             it.order = order
@@ -134,8 +142,14 @@ class HeirAdapter(private val listener: Listener)
                              * Primary
                              */
                             if (item.`in`.primary > 0) {
-                                it.primaryDetails.text = item.`in`.one
                                 it.primaryLayout.visibility = VISIBLE
+                                it.primaryHeader.apply {
+                                    val one = context.getString(ashabul_furudh)
+                                    val two = "${floor(item.`in`.primary)}"
+                                    text = context.getString(legacy_details_header, one, two)
+                                }
+//                                it.primaryDetails.text = item.`in`.one
+
                             } else {
                                 it.primaryLayout.visibility = GONE
                             }
@@ -144,8 +158,13 @@ class HeirAdapter(private val listener: Listener)
                              * Special
                              */
                             if (item.`in`.specialAmount > 0) {
-                                it.specialDetails.text = item.`in`.special
                                 it.specialLayout.visibility = VISIBLE
+//                                it.specialDetails.text = item.`in`.special
+                                it.specialHeader.apply {
+                                    val one = context.getString(special)
+                                    val two = "${floor(item.`in`.specialAmount)}"
+                                    text = context.getString(legacy_details_header, one, two)
+                                }
                             } else {
                                 it.specialLayout.visibility = GONE
                             }
@@ -154,8 +173,16 @@ class HeirAdapter(private val listener: Listener)
                              * Secondary
                              */
                             if (item.`in`.secondary > 0) {
-                                it.secondarDetails.text = item.`in`.two
                                 it.secondaryLayout.visibility = VISIBLE
+//                                it.secondarDetails.text = item.`in`.two
+                                it.secondaryHeader.apply {
+                                    val one = context.getString(ashabah)
+                                    val conf = resources.configuration
+                                    var two = getNumberInstance(getLocale(conf))
+                                        .format(floor(item.`in`.secondary))
+//                                    two = String.format("%.0f", two)
+                                    text = context.getString(legacy_details_header, one, two)
+                                }
                             } else {
                                 it.secondaryLayout.visibility = GONE
                             }

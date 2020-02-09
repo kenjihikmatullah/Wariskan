@@ -275,10 +275,11 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/primary_header"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Ashabul Furudh" />
+                        tools:text="@string/ashabul_furudh" />
 
                     <TextView
                         android:id="@+id/primary_details"
@@ -300,10 +301,11 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/special_header"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Special" />
+                        tools:text="@string/special" />
 
                     <TextView
                         android:id="@+id/special_details"
@@ -325,10 +327,11 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/secondary_header"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:text="Ashabah" />
+                        tools:text="@string/ashabah" />
 
                     <TextView
                         android:id="@+id/secondar_details"
@@ -344,11 +347,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:textSize="10sp"
-                    android:text="Any mistake can be reported to iniemailkenji@gmail.com" />
+                    android:textSize="12sp"
+                    android:text="@string/correction_text" />
 
             </LinearLayout>
 
+            <!-- Expand -->
             <ImageButton
                 android:id="@+id/expand_button"
                 android:layout_width="30dp"
@@ -360,13 +364,13 @@
                 android:onClick="@{() -> listener.inverse()}"
                 tools:srcCompat="@drawable/baseline_expand_more_white_24" />
 
+            <!-- Divider -->
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="20dp"
                 android:background="?android:attr/listDivider" />
-
 
         </LinearLayout>
     </ScrollView>
