@@ -334,7 +334,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/stats_total_amount"
+                            android:id="@+id/calc_total_amount"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:gravity="right"

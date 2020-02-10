@@ -10,11 +10,14 @@ import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.kenji.waris.model.Legacy
+import com.wariskan.R
 import com.wariskan.R.layout.fragment_legacy
 import com.wariskan.R.string.et_blank
 import com.wariskan.R.string.legacy
 import com.wariskan.ui.inheritance.InheritanceActivity
 import com.wariskan.ui.inheritance.InheritanceViewModel
+import com.wariskan.util.getNumber
 import com.wariskan.databinding.FragmentLegacyBinding as Binding
 import com.wariskan.ui.legacy.LegacyViewModel as ViewModel
 
@@ -23,6 +26,7 @@ class LegacyFragment : Fragment() {
     private lateinit var binding: Binding
     private lateinit var inheritanceViewModel: InheritanceViewModel
     private lateinit var viewModel: ViewModel
+    private var legacy = Legacy()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +53,10 @@ class LegacyFragment : Fragment() {
             inheritanceViewModel = ViewModelProvider(it).get(InheritanceViewModel::class.java)
             viewModel = ViewModelProvider(this).get(ViewModel::class.java)
             binding.lifecycleOwner = this
-            binding.legacy = inheritanceViewModel.repository.inheritance.value?.deceased?.legacy
+            inheritanceViewModel.repository.inheritance.value?.deceased?.let { deceased ->
+                legacy = deceased.legacy
+            }
+//            binding.legacy = inheritanceViewModel.repository.inheritance.value?.deceased?.legacy
             binding.viewModel = viewModel
         }
     }
@@ -62,44 +69,68 @@ class LegacyFragment : Fragment() {
                 )
             }
         })
-//        TODO('Set text of stats')
+    }
+
+    private fun adjustStatsLayout() {
+        binding.apply {
+            val res = resources
+
+            statsSharedAmount.text = getNumber(res, legacy.shared)
+            statsRestAmount.text = getNumber(res, legacy.rest)
+
+            statsPrimaryAmount.text = getNumber(res, legacy.primaryShared)
+            statsSecondaryAmount.text = getNumber(res, legacy.secondaryShared)
+        }
     }
 
     private fun setOnCalculate() {
         viewModel.onCalculate.observe(viewLifecycleOwner, Observer { onCalculate ->
-            if (!onCalculate) return@Observer
-
-            activity?.let { activity ->
-                inheritanceViewModel.apply {
-                    binding.apply {
-                        repository.inheritance.value?.deceased?.legacy?.let {
-                            if (legacyEt.text.isNullOrBlank())
-                                legacyEt.error = activity.getString(et_blank)
-                            else
-                                it.total = "${legacyEt.text}".toDouble()
+            binding.apply {
+                if (onCalculate) {
+                    activity?.let { activity ->
+                        inheritanceViewModel.apply {
+                            binding.apply {
+                                repository.inheritance.value?.deceased?.legacy?.let {
+                                    if (legacyEt.text.isNullOrBlank())
+                                        legacyEt.error = activity.getString(et_blank)
+                                    else
+                                        it.total = "${legacyEt.text}".toDouble()
+                                        legacyTv.text = getNumber(resources, it.total)
+                                }
+                            }
+                            repository.inheritance.value?.calculate(activity)
+                            adjustStatsLayout()
+                            update()
+                            inputLayout.visibility = GONE
+                            outputLayout.visibility = VISIBLE
+                            calculatedLayout.visibility = VISIBLE
                         }
                     }
-                    repository.inheritance.value?.calculate(activity)
-                    update()
-                    binding.calculatedTitle.visibility = VISIBLE
-                    binding.calculatedInstruction.visibility = VISIBLE
 
+                } else {
+                    inputLayout.visibility = VISIBLE
+                    outputLayout.visibility = GONE
+                    calculatedLayout.visibility = GONE
+                    statsLayout.visibility = GONE
                 }
             }
-
-            viewModel.calculated()
         })
     }
 
     private fun setOnShowStats() {
         viewModel.onShowStats.observe(viewLifecycleOwner, Observer { onShowStats ->
-            if (!onShowStats) return@Observer
-
             binding.apply {
-                calculatedLayout.visibility = GONE
-                statsLayout.visibility = VISIBLE
+                if (onShowStats) {
+//                    calculatedLayout.visibility = GONE
+                    statsLayout.visibility = VISIBLE
+                    showStatsButton.text = "Hide Stats"
+
+                } else {
+//                    calculatedLayout.visibility = VISIBLE
+                    statsLayout.visibility = GONE
+                    showStatsButton.text = "Show Stats"
+                }
             }
-            viewModel.showedStats()
         })
     }
 
@@ -107,7 +138,7 @@ class LegacyFragment : Fragment() {
         super.onResume()
         activity?.let {
             if (it is InheritanceActivity) {
-                it.binding.toolbarTitle.text = it.getString(legacy)
+                it.binding.toolbarTitle.text = it.getString(R.string.legacy)
             }
         }
     }

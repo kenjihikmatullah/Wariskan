@@ -708,6 +708,10 @@ class Inheritance {
         fun shareSecondary() {
             deceased.legacy.secondaryShareable.let shared@{ secondaryShareable ->
 
+                fun shareIt() {
+                    deceased.legacy.secondaryShared = secondaryShareable
+                }
+
                 /*
                  * Sons
                  * (and could be with daughters)
@@ -741,8 +745,10 @@ class Inheritance {
 
                     }
 
-
-                    if (sons.isNotEmpty()) return@shared
+                    if (sons.isNotEmpty()) {
+                        shareIt()
+                        return@shared
+                    }
                 }
 
                 /*
@@ -778,7 +784,10 @@ class Inheritance {
                         }
                     }
 
-                    if (list.isNotEmpty()) return@shared
+                    if (list.isNotEmpty())  {
+                        shareIt()
+                        return@shared
+                    }
                 }
 
                 /*
@@ -790,7 +799,10 @@ class Inheritance {
                         it.`in`.secondary = secondaryShareable
                         it.`in`.two = context.getString(dad_secondary)
                     }
-                    if (list.isNotEmpty()) return@shared
+                    if (list.isNotEmpty())  {
+                        shareIt()
+                        return@shared
+                    }
                 }
 
                 /*
@@ -801,7 +813,10 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable
                     }
-                    if (list.isNotEmpty()) return@shared
+                    if (list.isNotEmpty())  {
+                        shareIt()
+                        return@shared
+                    }
                 }
 
                 /*
@@ -835,7 +850,10 @@ class Inheritance {
                         }
                     }
 
-                    if (totalSize > 0) return@shared
+                    if (totalSize > 0) {
+                        shareIt()
+                        return@shared
+                    }
                 }
 
                 /*
@@ -869,7 +887,10 @@ class Inheritance {
                         }
                     }
 
-                    if (totalSize > 0) return@shared
+                    if (totalSize > 0)  {
+                        shareIt()
+                        return@shared
+                    }
                 }
 
                 /*
@@ -880,7 +901,10 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
-                    if (list.isNotEmpty()) return@shared
+                    if (list.isNotEmpty())  {
+                        shareIt()
+                        return@shared
+                    }
                 }
 
                 /*
@@ -891,7 +915,10 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
-                    if (list.isNotEmpty()) return@shared
+                    if (list.isNotEmpty())  {
+                        shareIt()
+                        return@shared
+                    }
                 }
 
                 /*
@@ -902,7 +929,10 @@ class Inheritance {
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
                     }
-                    if (list.isNotEmpty()) return@shared
+                    if (list.isNotEmpty())  {
+                        shareIt()
+                        return@shared
+                    }
                 }
 
                 /*
@@ -912,6 +942,11 @@ class Inheritance {
                     if (list.isEmpty()) return@let
                     list.forEach {
                         it.`in`.secondary = secondaryShareable / list.size
+                    }
+
+                    if (list.isNotEmpty()) {
+                        shareIt()
+                        return@shared
                     }
                 }
             }

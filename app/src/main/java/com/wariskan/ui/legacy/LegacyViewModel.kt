@@ -6,25 +6,19 @@ import androidx.lifecycle.ViewModel
 
 class LegacyViewModel() : ViewModel() {
 
-    private val _onCalculate = MutableLiveData<Boolean>()
+    private val _onCalculate = MutableLiveData<Boolean>(false)
     val onCalculate: LiveData<Boolean>
         get() = _onCalculate
 
-    private val _onShowStats = MutableLiveData<Boolean>()
+    private val _onShowStats = MutableLiveData<Boolean>(false)
     val onShowStats: LiveData<Boolean>
         get() = _onShowStats
 
     fun calculate() {
-        _onCalculate.value = true
-    }
-    fun calculated() {
-        _onCalculate.value = false
+        _onCalculate.value = _onCalculate.value?.not()
     }
 
     fun showStats() {
-        _onShowStats.value = true
-    }
-    fun showedStats() {
-        _onShowStats.value = false
+        _onShowStats.value = _onShowStats.value?.not()
     }
 }
