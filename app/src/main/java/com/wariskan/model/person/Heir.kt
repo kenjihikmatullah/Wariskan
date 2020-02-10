@@ -12,33 +12,18 @@ open class Heir : Person() {
     var `in` = LegacyIn()
     var id = currentId
     var position = DAD
-    var killedInheritee = false
+    var killedDeceased = false
 
-    /**
-     * EligibleOne
-     * returns whether this heir is alive, muslim,
-     * and didn't participate in the killing of inheritee.
-     */
     val eligibleOne: Boolean
-        get() = alive && muslim && !killedInheritee
-
-    /**
-     * EligibleTwo
-     * returns whether this heir is not disentitled by others.
-     */
+        get() = alive && muslim && !killedDeceased
     var eligibleTwo = true
-
-    /**
-     * Eligible
-     * returns wheter this heir is eligible to get the inheritance.
-     */
     val eligible: Boolean
         get() = eligibleOne && eligibleTwo
-
 
     init {
         currentId++
     }
+
 
     fun resetIn() {
         `in`.primary = 0.0

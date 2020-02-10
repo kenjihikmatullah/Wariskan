@@ -9,6 +9,7 @@ import com.wariskan.R.drawable.*
 import com.wariskan.R.string.*
 import com.wariskan.R.string.alive
 import com.wariskan.R.string.dead
+import com.wariskan.util.getNumber
 import kotlin.math.floor
 
 @BindingAdapter("alive_adapter")
@@ -82,6 +83,11 @@ fun TextView.doubleAdapter(num: Double = 0.0) {
 
     val text = "${floor(shortened)} $unit"
     setText(text)
+}
+
+@BindingAdapter("number_format")
+fun TextView.numberFormat(double: Double) {
+    text = getNumber(resources, double)
 }
 //
 //@BindingAdapter("icon_expanded")

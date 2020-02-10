@@ -9,11 +9,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders.of
-import com.wariskan.ui.inheritance.InheritanceViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.wariskan.R.layout.fragment_legacy
-import com.wariskan.R.string.*
+import com.wariskan.R.string.et_blank
+import com.wariskan.R.string.legacy
 import com.wariskan.ui.inheritance.InheritanceActivity
+import com.wariskan.ui.inheritance.InheritanceViewModel
 import com.wariskan.databinding.FragmentLegacyBinding as Binding
 import com.wariskan.ui.legacy.LegacyViewModel as ViewModel
 
@@ -33,6 +34,7 @@ class LegacyFragment : Fragment() {
         setUpViewModel()
         adjustLayout()
         setOnCalculate()
+        setOnShowStats()
         return binding.root
     }
 
@@ -44,10 +46,10 @@ class LegacyFragment : Fragment() {
 
     private fun setUpViewModel() {
         activity?.let {
-            inheritanceViewModel = of(it).get(InheritanceViewModel::class.java)
-
-            viewModel = of(this).get(ViewModel::class.java)
+            inheritanceViewModel = ViewModelProvider(it).get(InheritanceViewModel::class.java)
+            viewModel = ViewModelProvider(this).get(ViewModel::class.java)
             binding.lifecycleOwner = this
+            binding.legacy = inheritanceViewModel.repository.inheritance.value?.deceased?.legacy
             binding.viewModel = viewModel
         }
     }
@@ -60,6 +62,7 @@ class LegacyFragment : Fragment() {
                 )
             }
         })
+//        TODO('Set text of stats')
     }
 
     private fun setOnCalculate() {
@@ -85,6 +88,18 @@ class LegacyFragment : Fragment() {
             }
 
             viewModel.calculated()
+        })
+    }
+
+    private fun setOnShowStats() {
+        viewModel.onShowStats.observe(viewLifecycleOwner, Observer { onShowStats ->
+            if (!onShowStats) return@Observer
+
+            binding.apply {
+                calculatedLayout.visibility = GONE
+                statsLayout.visibility = VISIBLE
+            }
+            viewModel.showedStats()
         })
     }
 

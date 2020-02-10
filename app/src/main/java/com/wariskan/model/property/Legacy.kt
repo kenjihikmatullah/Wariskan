@@ -24,11 +24,24 @@ class Legacy {
             return amount
         }
 
-    val shareable: Double
-        get() = total - debtAmount - willAmount - funeralCosts
-
+    val primaryShareable: Double
+        get() {
+            return total - debtAmount - willAmount - funeralCosts
+        }
     var primaryShared = 0.0
 
     val secondaryShareable: Double
-        get() = shareable - primaryShared
+        get() {
+            return primaryShareable - primaryShared
+        }
+    var secondaryShared = 0.0
+
+    val shared: Double
+        get() {
+            return primaryShared + secondaryShared
+        }
+    val rest: Double
+        get() {
+            return secondaryShareable - secondaryShared
+        }
 }

@@ -69,5 +69,5 @@
     <string name="calculated_title">Berhasil!</string>
     <string name="home_instruction">Klik tombol tambah untuk mulai</string>
     <string name="dad_of_dad_1_6">Ayah dari ayah dapat 1/6 jika almarhum tidak meninggalkan ayah, anak, dan cucu</string>
-    <string name="daughter_1_2">Anak perempuan dapat 1.2 jika sendiri dan almarhum tidak meninggalkan anak laki dan anak laki dari anak laki</string>
+    <string name="daughter_1_2">Anak perempuan dapat 1/2 jika sendiri dan almarhum tidak meninggalkan anak laki dan anak laki dari anak laki</string>
 </resources>

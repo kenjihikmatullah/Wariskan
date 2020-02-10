@@ -10,10 +10,21 @@ class LegacyViewModel() : ViewModel() {
     val onCalculate: LiveData<Boolean>
         get() = _onCalculate
 
+    private val _onShowStats = MutableLiveData<Boolean>()
+    val onShowStats: LiveData<Boolean>
+        get() = _onShowStats
+
     fun calculate() {
         _onCalculate.value = true
     }
     fun calculated() {
         _onCalculate.value = false
+    }
+
+    fun showStats() {
+        _onShowStats.value = true
+    }
+    fun showedStats() {
+        _onShowStats.value = false
     }
 }

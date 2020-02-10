@@ -383,5 +383,6 @@
     </string>
     <string name="calculated_instruction">You can see the results in each heir profile</string>
     <string name="calculated_title">Calculated!</string>
-    <string name="correction_text">Any mistake can be reported to iniemailkenji@gmail.com</string>
+    <string name="correction_text">Any mistake can be reported to <b>iniemailkenji@gmail.com</b></string>
+    <string name="total">Total</string>
 </resources>

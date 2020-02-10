@@ -297,15 +297,15 @@ class Inheritance {
                 /*
                  * Record the amount of shared primary inheritance
                  */
-                legacy.primaryShared += legacy.shareable / divider * multiplier
+                legacy.primaryShared += legacy.primaryShareable / divider * multiplier
                 Log.i("HEHEHE", "From: ${list[0].name}")
-                Log.i("HEHEHE", "Just shared: ${legacy.shareable / divider * multiplier}")
+                Log.i("HEHEHE", "Just shared: ${legacy.primaryShareable / divider * multiplier}")
 
                 /*
                  * Share the inheritance evenly
                  */
                 list.forEach {
-                    it.`in`.primary += legacy.shareable / divider / list.size * multiplier
+                    it.`in`.primary += legacy.primaryShareable / divider / list.size * multiplier
                 }
             }
 
@@ -698,7 +698,7 @@ class Inheritance {
                 /*
                  * To mom
                  */
-                val toMom = (deceased.legacy.shareable - spentToSpouses) / 3
+                val toMom = (deceased.legacy.primaryShareable - spentToSpouses) / 3
                 mom[0].`in`.specialAmount += toMom
                 deceased.legacy.primaryShared += toMom
                 mom[0].`in`.special = context.getString(mom_special)

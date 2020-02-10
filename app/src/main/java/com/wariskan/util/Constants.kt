@@ -1,10 +1,14 @@
 package com.wariskan.util
 
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import java.text.NumberFormat
+import java.text.NumberFormat.getNumberInstance
 import java.util.*
+import kotlin.math.floor
 
 const val ID = "ID"
 const val POSITION = "POSITION"
@@ -19,10 +23,20 @@ val MIGRATION_to_1_2 = object : Migration(1, 2) {
     }
 }
 
-fun getLocale(conf: Configuration) : Locale {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+fun getLocale(conf: Configuration): Locale {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         conf.locales[0]
-    } else{
+    } else {
         conf.locale;
     }
+}
+
+/**
+ * Get number
+ * with comma/point every 3 digits,
+ * floored, and converted to string
+ */
+fun getNumber(res: Resources, double: Double) : String {
+    return getNumberInstance(getLocale(res.configuration))
+        .format(floor(double))
 }

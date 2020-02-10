@@ -12,19 +12,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kenji.waris.model.Heir
+import com.wariskan.R
 import com.wariskan.R.drawable.baseline_expand_less_white_24
 import com.wariskan.R.drawable.baseline_expand_more_white_24
-import com.wariskan.R.id.delete
-import com.wariskan.R.id.edit
+import com.wariskan.R.id.*
 import com.wariskan.R.menu.heir_popup_menu
 import com.wariskan.R.string.*
 import com.wariskan.databinding.HeirItemBinding
 import com.wariskan.databinding.HeirItemBinding.inflate
 import com.wariskan.ui.heir.HeirAdapter.ViewHolder
-import com.wariskan.util.getLocale
-import java.text.NumberFormat
-import java.text.NumberFormat.getNumberInstance
-import kotlin.math.floor
+import com.wariskan.util.getNumber
 
 /**
  * Adapter
@@ -37,12 +34,12 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
         val deleteUnit: (order: Int) -> Unit
     ) {
         val isExpanded = MutableLiveData<Boolean>(false)
+        val isDetailed = MutableLiveData<Boolean>(false)
         fun edit(order: Int) = editUnit(order)
         fun delete(order: Int) = deleteUnit(order)
         fun inverse() {
             isExpanded.value = isExpanded.value?.not()
         }
-
     }
 
     /**
@@ -69,6 +66,11 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = inflate(inflater, parent, false)
+        parent.context.let {
+            if (it is AppCompatActivity) {
+                binding.lifecycleOwner = it
+            }
+        }
         return ViewHolder(binding)
     }
 
@@ -81,8 +83,8 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
             /*
              * Layout variables
              */
-            val item = getItem(order)
-            it.heir = item
+            val heir = getItem(order)
+            it.heir = heir
             it.order = order
             it.listener = listener
 
@@ -104,6 +106,91 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
              */
 
             /*
+             * Calculation
+             */
+            it.root.context.resources.let { res ->
+                it.calcPrimaryAmount.text = getNumber(res, heir.`in`.primary)
+                it.calcSpecialAmount.text = getNumber(res, heir.`in`.specialAmount)
+                it.calcSecondaryAmount.text = getNumber(res, heir.`in`.secondary)
+                it.calcTotalAmount.text = getNumber(res, heir.`in`.total)
+            }
+
+            /*
+             * Details
+             */
+            it.root.context.let { context ->
+
+                /*
+                             * Ineligible
+                             */
+                if (!heir.eligibleOne) {
+                    it.ineligibleLayout.visibility = VISIBLE
+                    it.ineligibleDetails.text = heir.`in`
+                        .getIneligible(heir, it.ineligibleDetails.context)
+                } else {
+                    it.ineligibleLayout.visibility = GONE
+                }
+
+                /*
+                 * Disentitled
+                 */
+                if (!heir.eligibleTwo) {
+                    it.disentitledDetails.text = heir.`in`.disentitler
+                    it.disentitledLayout.visibility = VISIBLE
+                } else {
+                    it.disentitledLayout.visibility = GONE
+                }
+
+                /*
+                 * Primary
+                 */
+                if (heir.`in`.primary > 0) {
+                    it.primaryLayout.visibility = VISIBLE
+                    it.primaryHeader.apply {
+                        val one = context.getString(ashabul_furudh)
+//                        val two = getNumber(resources, heir.`in`.primary)
+//                        text = context.getString(legacy_details_header, one, two)
+                        text = one
+                    }
+
+                } else {
+                    it.primaryLayout.visibility = GONE
+                }
+
+                /*
+                 * Special
+                 */
+                if (heir.`in`.specialAmount > 0) {
+                    it.specialLayout.visibility = VISIBLE
+//                                it.specialDetails.text = item.`in`.special
+                    it.specialHeader.apply {
+                        val one = context.getString(special)
+//                        val two = getNumber(resources, heir.`in`.specialAmount)
+//                        text = context.getString(legacy_details_header, one, two)
+                        text = one
+                    }
+                } else {
+                    it.specialLayout.visibility = GONE
+                }
+
+                /*
+                 * Secondary
+                 */
+                if (heir.`in`.secondary > 0) {
+                    it.secondaryLayout.visibility = VISIBLE
+//                                it.secondarDetails.text = item.`in`.two
+                    it.secondaryHeader.apply {
+                        val one = context.getString(ashabah)
+//                        val two = getNumber(resources, heir.`in`.secondary)
+//                        text = context.getString(legacy_details_header, one, two)
+                        text = one
+                    }
+                } else {
+                    it.secondaryLayout.visibility = GONE
+                }
+            }
+
+            /*
              * Expand button
              */
             it.expandButton.context?.let { context ->
@@ -113,90 +200,27 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
                         /*
                          * Expanded
                          */
-                        if (isExpanded && item.name.isNotBlank()) {
+                        if (isExpanded) {
+                            it.expandable.visibility = VISIBLE
                             it.expandButton.setImageResource(baseline_expand_less_white_24)
-                            it.detailsLayout.visibility = VISIBLE
-
-                            /*
-                             * Ineligible
-                             */
-                            if (!item.eligibleOne) {
-                                it.ineligibleDetails.text = item.`in`
-                                    .getIneligible(item, it.ineligibleDetails.context)
-                                it.ineligibleLayout.visibility = VISIBLE
-                            } else {
-                                it.ineligibleLayout.visibility = GONE
-                            }
-
-                            /*
-                             * Disentitled
-                             */
-                            if (!item.eligibleTwo) {
-                                it.disentitledDetails.text = item.`in`.disentitler
-                                it.disentitledLayout.visibility = VISIBLE
-                            } else {
-                                it.disentitledLayout.visibility = GONE
-                            }
-
-                            /*
-                             * Primary
-                             */
-                            if (item.`in`.primary > 0) {
-                                it.primaryLayout.visibility = VISIBLE
-                                it.primaryHeader.apply {
-                                    val one = context.getString(ashabul_furudh)
-                                    val two = "${floor(item.`in`.primary)}"
-                                    text = context.getString(legacy_details_header, one, two)
-                                }
-//                                it.primaryDetails.text = item.`in`.one
-
-                            } else {
-                                it.primaryLayout.visibility = GONE
-                            }
-
-                            /*
-                             * Special
-                             */
-                            if (item.`in`.specialAmount > 0) {
-                                it.specialLayout.visibility = VISIBLE
-//                                it.specialDetails.text = item.`in`.special
-                                it.specialHeader.apply {
-                                    val one = context.getString(special)
-                                    val two = "${floor(item.`in`.specialAmount)}"
-                                    text = context.getString(legacy_details_header, one, two)
-                                }
-                            } else {
-                                it.specialLayout.visibility = GONE
-                            }
-
-                            /*
-                             * Secondary
-                             */
-                            if (item.`in`.secondary > 0) {
-                                it.secondaryLayout.visibility = VISIBLE
-//                                it.secondarDetails.text = item.`in`.two
-                                it.secondaryHeader.apply {
-                                    val one = context.getString(ashabah)
-                                    val conf = resources.configuration
-                                    var two = getNumberInstance(getLocale(conf))
-                                        .format(floor(item.`in`.secondary))
-//                                    two = String.format("%.0f", two)
-                                    text = context.getString(legacy_details_header, one, two)
-                                }
-                            } else {
-                                it.secondaryLayout.visibility = GONE
-                            }
                         }
 
                         /*
                          * Not expanded
                          */
                         else {
+                            it.expandable.visibility = GONE
                             it.expandButton.setImageResource(baseline_expand_more_white_24)
-                            it.detailsLayout.visibility = GONE
                         }
                     })
                 }
+            }
+
+            /*
+             * Switch button
+             */
+            it.switchButton.setOnCheckedChangeListener { _, isChecked ->
+                listener.isDetailed.value = isChecked
             }
 
             /*
@@ -207,10 +231,10 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
                 popup.menuInflater
                     .inflate(heir_popup_menu, popup.menu)
                 popup.setOnMenuItemClickListener { menuItem ->
-                    if (menuItem.itemId == edit) {
+                    if (menuItem.itemId == R.id.edit) {
                         listener.edit(order)
 
-                    } else if (menuItem.itemId == delete) {
+                    } else if (menuItem.itemId == R.id.delete) {
                         listener.delete(order)
                     }
 
