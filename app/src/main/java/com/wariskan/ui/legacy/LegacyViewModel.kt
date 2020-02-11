@@ -1,5 +1,7 @@
 package com.wariskan.ui.legacy
 
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

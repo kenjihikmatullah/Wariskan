@@ -40,3 +40,15 @@ fun getNumber(res: Resources, double: Double) : String {
     return getNumberInstance(getLocale(res.configuration))
         .format(floor(double))
 }
+
+fun String.getStringNoComma() : String {
+    return if (contains(",")) {
+        replace(",", "")
+
+    } else if (contains(".")) {
+        replace(".", "")
+
+    } else {
+        this
+    }
+}

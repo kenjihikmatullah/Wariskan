@@ -70,9 +70,15 @@ class HeirFragment() : Fragment() {
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
         binding.adView.adListener = object : AdListener() {
-            override fun onAdFailedToLoad(errorCode: Int) {
-                super.onAdFailedToLoad(errorCode)
-                Log.i("HEHEHE", "error: $errorCode")
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                binding.adPlaceholder.visibility = GONE
+                binding.adView.visibility = VISIBLE
+            }
+            override fun onAdFailedToLoad(p0: Int) {
+                super.onAdFailedToLoad(p0)
+                binding.adPlaceholder.visibility = VISIBLE
+                binding.adView.visibility = GONE
             }
         }
     }

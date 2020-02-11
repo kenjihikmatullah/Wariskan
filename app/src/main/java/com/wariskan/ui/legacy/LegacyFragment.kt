@@ -1,11 +1,16 @@
 package com.wariskan.ui.legacy
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,10 +19,11 @@ import com.kenji.waris.model.Legacy
 import com.wariskan.R
 import com.wariskan.R.layout.fragment_legacy
 import com.wariskan.R.string.et_blank
-import com.wariskan.R.string.legacy
 import com.wariskan.ui.inheritance.InheritanceActivity
 import com.wariskan.ui.inheritance.InheritanceViewModel
 import com.wariskan.util.getNumber
+import com.wariskan.util.getStringNoComma
+import kotlin.math.ceil
 import com.wariskan.databinding.FragmentLegacyBinding as Binding
 import com.wariskan.ui.legacy.LegacyViewModel as ViewModel
 
@@ -27,6 +33,56 @@ class LegacyFragment : Fragment() {
     private lateinit var inheritanceViewModel: InheritanceViewModel
     private lateinit var viewModel: ViewModel
     private var legacy = Legacy()
+
+    val legacyWatcher: TextWatcher
+        get() {
+            return object : TextWatcher {
+                val et = binding.legacyEt
+
+                var lenBefore = 0
+                var lenAfter = 0
+                var lenBlocked = 0
+                var selectionBefore = 0
+                val selectionAfter: Int
+                    get() {
+                        val diffs = lenAfter - lenBefore
+                        return if (diffs >= 0) {
+                            selectionBefore + diffs
+
+                        } else {
+                            selectionBefore + diffs + lenBlocked
+                        }
+                    }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                    s?.let {
+                        lenBefore = it.length
+                    }
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    selectionBefore = start
+                    lenBlocked = before
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    et.removeTextChangedListener(this)
+                    val text = et.text.toString().getStringNoComma()
+                    if (!text.isBlank() && text.toDouble() <= Double.MAX_VALUE) {
+                        val double = getNumber(resources, text.toDouble())
+                        lenAfter = double.length
+                        et.setText(double)
+                        et.setSelection(selectionAfter)
+                    }
+                    et.addTextChangedListener(this)
+                }
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,9 +120,11 @@ class LegacyFragment : Fragment() {
     private fun adjustLayout() {
         inheritanceViewModel.repository.inheritance.observe(viewLifecycleOwner, Observer {
             binding.apply {
-                legacyEt.setText(
-                    String.format("%.0f", it.deceased.legacy.total)
-                )
+                legacyEt.apply {
+                    setText(getNumber(resources, it.deceased.legacy.total))
+                    addTextChangedListener(legacyWatcher)
+                }
+
             }
         })
     }
@@ -89,13 +147,15 @@ class LegacyFragment : Fragment() {
                 if (onCalculate) {
                     activity?.let { activity ->
                         inheritanceViewModel.apply {
+                            hideKeyboard()
                             binding.apply {
                                 repository.inheritance.value?.deceased?.legacy?.let {
                                     if (legacyEt.text.isNullOrBlank())
                                         legacyEt.error = activity.getString(et_blank)
                                     else
-                                        it.total = "${legacyEt.text}".toDouble()
-                                        legacyTv.text = getNumber(resources, it.total)
+                                        it.total = "${legacyEt.text}".getStringNoComma().toDouble()
+
+                                    legacyTv.text = getNumber(resources, it.total)
                                 }
                             }
                             repository.inheritance.value?.calculate(activity)
@@ -115,6 +175,13 @@ class LegacyFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun hideKeyboard() {
+        activity?.let {
+            val manager = it.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(binding.root.windowToken, 0)
+        }
     }
 
     private fun setOnShowStats() {
