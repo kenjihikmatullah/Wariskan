@@ -28,6 +28,7 @@
             android:launchMode="singleInstance" />
         <activity
             android:name="com.wariskan.MainActivity"
+            android:theme="@style/App.Launcher"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

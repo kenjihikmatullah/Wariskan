@@ -12,6 +12,10 @@
         <item name="actionBarSize">0dp</item>
     </style>
 
+    <style name="App.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
     <style name="toolbar_title">
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
