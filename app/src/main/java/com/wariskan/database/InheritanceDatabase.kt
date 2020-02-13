@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.wariskan.util.MIGRATION_to_1_2
 
-@Database(entities = [Inheritance::class], version = 2)
+@Database(entities = [Inheritance::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class InheritanceDatabase : RoomDatabase() {
     abstract val dao: InheritanceDao

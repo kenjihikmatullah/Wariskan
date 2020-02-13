@@ -3,6 +3,9 @@ package com.wariskan.util
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import java.text.NumberFormat
@@ -51,5 +54,53 @@ fun String.getStringNoComma() : String {
 
     } else {
         this
+    }
+}
+
+fun getWatcher(et: EditText, res: Resources) : TextWatcher {
+    return object : TextWatcher {
+
+        var lenBefore = 0
+        var lenAfter = 0
+        var lenBlocked = 0
+        var selectionBefore = 0
+        val selectionAfter: Int
+            get() {
+                val diffs = lenAfter - lenBefore
+                return if (diffs >= 0) {
+                    selectionBefore + diffs
+
+                } else {
+                    selectionBefore + diffs + lenBlocked
+                }
+            }
+
+        override fun beforeTextChanged(
+            s: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+            s?.let {
+                lenBefore = it.length
+            }
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            selectionBefore = start
+            lenBlocked = before
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            et.removeTextChangedListener(this)
+            val text = et.text.toString().getStringNoComma()
+            if (!text.isBlank() && text.toDouble() <= Double.MAX_VALUE) {
+                val double = getNumber(res, text.toDouble())
+                lenAfter = double.length
+                et.setText(double)
+                et.setSelection(selectionAfter)
+            }
+            et.addTextChangedListener(this)
+        }
     }
 }

@@ -38,19 +38,19 @@
                         android:layout_marginTop="20dp"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:maxLines="4"
-                            android:text="@string/legacy_instruction"
-                            android:textSize="15sp" />
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:maxLines="4"-->
+<!--                            android:text="Total of Legacy"-->
+<!--                            android:textSize="15sp" />-->
 
-                        <!-- Legacy -->
+                        <!-- Total of Legacy -->
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:hint="@string/legacy">
+                            android:hint="Total of Legacy">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/legacy_et"
@@ -64,14 +64,62 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <!--        <EditText-->
-                        <!--            android:layout_marginTop="10dp"-->
-                        <!--            android:id="@+id/legacy_et"-->
-                        <!--            android:layout_width="match_parent"-->
-                        <!--            android:layout_height="wrap_content"-->
-                        <!--            android:hint="@string/legacy"-->
-                        <!--            android:inputType="number"-->
-                        <!--            android:singleLine="true" />-->
+                        <!-- Funeral Costs -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Funeral Costs">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/legacy_funeral_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/white"
+                                android:inputType="number"
+                                android:maxLength="23"
+                                android:shadowColor="@color/primaryColor"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Debt Amount -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Debt Amount">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/legacy_debt_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/white"
+                                android:inputType="number"
+                                android:maxLength="23"
+                                android:shadowColor="@color/primaryColor"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Will Amount -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Will Amount">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/legacy_will_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/white"
+                                android:inputType="number"
+                                android:maxLength="23"
+                                android:shadowColor="@color/primaryColor"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <!-- Calculate -->
                         <Button
@@ -114,7 +162,7 @@
                         android:layout_marginTop="40dp"
                         android:orientation="vertical"
                         android:visibility="gone"
-                        tools:visibility="visible">
+                        tools:visibility="gone">
 
                         <!-- Shareability -->
                         <LinearLayout
@@ -284,6 +332,7 @@
                 android:id="@+id/calculated_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:visibility="gone"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
@@ -325,7 +374,8 @@
             android:layout_gravity="bottom"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            ads:adSize="LARGE_BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+            android:visibility="gone"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            ads:adSize="LARGE_BANNER" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

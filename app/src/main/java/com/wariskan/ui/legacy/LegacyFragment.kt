@@ -11,12 +11,15 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdSize.LARGE_BANNER
 import com.kenji.waris.model.Legacy
 import com.wariskan.R
 import com.wariskan.R.layout.fragment_legacy
@@ -25,6 +28,7 @@ import com.wariskan.ui.inheritance.InheritanceActivity
 import com.wariskan.ui.inheritance.InheritanceViewModel
 import com.wariskan.util.getNumber
 import com.wariskan.util.getStringNoComma
+import com.wariskan.util.getWatcher
 import kotlin.math.ceil
 import com.wariskan.databinding.FragmentLegacyBinding as Binding
 import com.wariskan.ui.legacy.LegacyViewModel as ViewModel
@@ -108,6 +112,8 @@ class LegacyFragment : Fragment() {
     }
 
     private fun refreshAd() {
+        //        binding.adView.adUnitId = "ca-app-pub-3178233257268861/8063147418"
+//        binding.adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111")
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
     }
@@ -128,11 +134,38 @@ class LegacyFragment : Fragment() {
     private fun adjustLayout() {
         inheritanceViewModel.repository.inheritance.observe(viewLifecycleOwner, Observer {
             binding.apply {
+
+                /*
+                 * Total of legacy
+                 */
                 legacyEt.apply {
                     setText(getNumber(resources, it.deceased.legacy.total))
                     addTextChangedListener(legacyWatcher)
                 }
 
+                /*
+                 * Funeral costs
+                 */
+                legacyFuneralEt.apply {
+                    setText(getNumber(resources, it.deceased.legacy.funeralCosts))
+                    addTextChangedListener(getWatcher(this, resources))
+                }
+
+                /*
+                 * Debt amount
+                 */
+                legacyDebtEt.apply {
+                    setText(getNumber(resources, it.deceased.legacy.debtAmount))
+                    addTextChangedListener(getWatcher(this, resources))
+                }
+
+                /*
+                 * Will amount
+                 */
+                legacyWillEt.apply {
+                    setText(getNumber(resources, it.deceased.legacy.willAmount))
+                    addTextChangedListener(getWatcher(this, resources))
+                }
             }
         })
     }
@@ -158,12 +191,51 @@ class LegacyFragment : Fragment() {
                             hideKeyboard()
                             binding.apply {
                                 repository.inheritance.value?.deceased?.legacy?.let {
-                                    if (legacyEt.text.isNullOrBlank())
-                                        legacyEt.error = activity.getString(et_blank)
-                                    else
-                                        it.total = "${legacyEt.text}".getStringNoComma().toDouble()
 
-                                    legacyTv.text = getNumber(resources, it.total)
+                                    /*
+                                     * Total of legacy
+                                     */
+                                    legacyEt.let { et ->
+                                        if (et.text.isNullOrBlank())
+                                            legacyFuneralEt.error = activity.getString(et_blank)
+                                        else
+                                            it.total = "${et.text}".getStringNoComma().toDouble()
+                                    }
+
+                                    /*
+                                     * Funeral costs
+                                     */
+                                    legacyFuneralEt.let { et ->
+                                        if (et.text.isNullOrBlank())
+                                            legacyFuneralEt.error = activity.getString(et_blank)
+                                        else
+                                            it.funeralCosts = "${et.text}".getStringNoComma().toDouble()
+                                    }
+
+                                    /*
+                                     * Debt amount
+                                     */
+                                    legacyDebtEt.let { et ->
+                                        if (et.text.isNullOrBlank())
+                                            et.error = activity.getString(et_blank)
+                                        else
+                                            it.debtAmount = "${et.text}".getStringNoComma().toDouble()
+                                    }
+
+                                    /*
+                                     * Will amount
+                                     */
+                                    legacyWillEt.let { et ->
+                                        if (et.text.isNullOrBlank())
+                                            et.error = activity.getString(et_blank)
+                                        else
+                                            it.willAmount = "${et.text}".getStringNoComma().toDouble()
+                                    }
+
+                                    /*
+                                     * Shareable
+                                     */
+                                    legacyTv.text = getNumber(resources, it.primaryShareable)
                                 }
                             }
                             repository.inheritance.value?.calculate(activity)

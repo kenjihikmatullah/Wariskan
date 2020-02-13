@@ -22,22 +22,22 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/ad_placeholder"
-                android:layout_width="match_parent"
-                android:layout_height="90dp" />
+<!--            <FrameLayout-->
+<!--                android:id="@+id/ad_placeholder"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="90dp" />-->
 
-            <com.google.android.gms.ads.AdView
-                android:visibility="gone"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/adView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                ads:adSize="BANNER"
-                ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+<!--            <com.google.android.gms.ads.AdView-->
+<!--                android:visibility="gone"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+<!--                android:id="@+id/adView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
+<!--                ads:adSize="BANNER"/>-->
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"

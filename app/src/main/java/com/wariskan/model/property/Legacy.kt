@@ -9,20 +9,22 @@ class Legacy {
     var funeralCosts = 0.0
 
     var debts = mutableListOf<Debt>()
-    val debtAmount: Double
-        get() {
-            var amount = 0.0
-            debts.forEach { amount += it.amount }
-            return amount
-        }
+//    val debtAmount: Double
+//        get() {
+//            var amount = 0.0
+//            debts.forEach { amount += it.amount }
+//            return amount
+//        }
+    var debtAmount = 0.0
 
     var wills = mutableListOf<Will>()
-    val willAmount: Double
-        get() {
-            var amount = 0.0
-            wills.forEach { amount += it.amount }
-            return amount
-        }
+//    val willAmount: Double
+//        get() {
+//            var amount = 0.0
+//            wills.forEach { amount += it.amount }
+//            return amount
+//        }
+    var willAmount = 0.0
 
     val primaryShareable: Double
         get() {

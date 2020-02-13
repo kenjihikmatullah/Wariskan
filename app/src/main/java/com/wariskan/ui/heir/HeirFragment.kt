@@ -13,6 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders.of
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdSize.BANNER
+import com.google.android.gms.ads.AdSize.LARGE_BANNER
 import com.kenji.waris.model.Position.*
 import com.wariskan.AddEditActivity
 import com.wariskan.R.drawable.baseline_edit_white_48dp
@@ -55,7 +58,7 @@ class HeirFragment() : Fragment() {
     ): View? {
 
         binding = inflate(inflater, fragment_heir, container, false)
-        refreshAd()
+//        refreshAd()
         setUpViewModel()
         handleArguments()
         setUpAdapter()
@@ -66,22 +69,25 @@ class HeirFragment() : Fragment() {
         return binding.root
     }
 
-    private fun refreshAd() {
-        val adRequest = AdRequest.Builder().build()
-        binding.adView.loadAd(adRequest)
-        binding.adView.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                binding.adPlaceholder.visibility = GONE
-                binding.adView.visibility = VISIBLE
-            }
-            override fun onAdFailedToLoad(p0: Int) {
-                super.onAdFailedToLoad(p0)
-                binding.adPlaceholder.visibility = VISIBLE
-                binding.adView.visibility = GONE
-            }
-        }
-    }
+//    private fun refreshAd() {
+////        binding.adView.adUnitId = "ca-app-pub-3178233257268861/3852439663"
+////        binding.adView.adUnitId = "ca-app-pub-3940256099942544/6300978111" // testing
+//        val adRequest = AdRequest.Builder().build()
+//        binding.adView.loadAd(adRequest)
+//        binding.adView.adListener = object : AdListener() {
+//
+//            override fun onAdLoaded() {
+//                super.onAdLoaded()
+//                binding.adPlaceholder.visibility = GONE
+//                binding.adView.visibility = VISIBLE
+//            }
+//            override fun onAdFailedToLoad(p0: Int) {
+//                super.onAdFailedToLoad(p0)
+//                binding.adPlaceholder.visibility = VISIBLE
+//                binding.adView.visibility = GONE
+//            }
+//        }
+//    }
 
     private fun setUpViewModel() {
         activity?.let {

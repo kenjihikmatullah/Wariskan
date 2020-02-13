@@ -11,6 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdSize.BANNER
 import com.kenji.waris.model.Heir
 import com.wariskan.R
 import com.wariskan.R.drawable.baseline_expand_less_white_24
@@ -79,6 +83,27 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
      */
     override fun onBindViewHolder(holder: ViewHolder, order: Int) {
         holder.binding.let {
+
+            fun refreshAd() {
+                //        binding.adView.adUnitId = "ca-app-pub-3178233257268861/3852439663"
+//                it.adView.adUnitId = "ca-app-pub-3940256099942544/6300978111" // testing
+                val adRequest = AdRequest.Builder().build()
+//                it.adView.loadAd(adRequest)
+                it.adView.adListener = object : AdListener() {
+                    override fun onAdLoaded() {
+                        super.onAdLoaded()
+                        it.adPlaceholder.visibility = GONE
+                        it.adView.visibility = VISIBLE
+                    }
+                    override fun onAdFailedToLoad(p0: Int) {
+                        super.onAdFailedToLoad(p0)
+                        it.adPlaceholder.visibility = VISIBLE
+                        it.adView.visibility = GONE
+                    }
+                }
+            }
+
+            refreshAd()
 
             /*
              * Layout variables
