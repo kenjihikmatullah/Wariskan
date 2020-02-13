@@ -81,7 +81,8 @@ fun TextView.doubleAdapter(num: Double = 0.0) {
         unit += context.getString(billion)
     }
 
-    val text = "${floor(shortened)} $unit"
+//    val text = "${floor(shortened)} $unit"
+    val text = String.format("%.2f %s", shortened, unit)
     setText(text)
 }
 

@@ -15,6 +15,8 @@ import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
 import com.kenji.waris.model.Legacy
 import com.wariskan.R
 import com.wariskan.R.layout.fragment_legacy
@@ -91,6 +93,7 @@ class LegacyFragment : Fragment() {
     ): View? {
 
         binding = inflate(inflater, fragment_legacy, container, false)
+        refreshAd()
         setUpViewModel()
         adjustLayout()
         setOnCalculate()
@@ -102,6 +105,11 @@ class LegacyFragment : Fragment() {
         super.onStart()
         binding.calculatedTitle.visibility = GONE
         binding.calculatedInstruction.visibility = GONE
+    }
+
+    private fun refreshAd() {
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
     }
 
     private fun setUpViewModel() {

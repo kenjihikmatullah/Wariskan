@@ -335,7 +335,12 @@ class AddEditFragment() : Fragment(), OnItemSelectedListener {
                             SIBLING -> {
                                 val sibling = Sibling()
                                 sibling.hehehe()
-                                sibling.type = if (spinnerOne == 0) FULL else PATERNAL
+                                sibling.type = when (spinnerOne) {
+                                    0 -> FULL
+                                    1 -> PATERNAL
+                                    else -> MATERNAL
+                                }
+//                                Log.i("HEHEHE", "${sibling.type}")
                                 heir = sibling
                             }
                             GRANDPA -> {

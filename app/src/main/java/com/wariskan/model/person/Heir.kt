@@ -14,6 +14,9 @@ open class Heir : Person() {
     var position = DAD
     var killedDeceased = false
 
+    /*
+     * Eligibility
+     */
     val eligibleOne: Boolean
         get() = alive && muslim && !killedDeceased
     var eligibleTwo = true
@@ -26,15 +29,25 @@ open class Heir : Person() {
 
 
     fun resetIn() {
+
+        /*
+         * Amount
+         */
         `in`.primary = 0.0
-        `in`.specialAmount = 0.0
+//        `in`.specialAmount = 0.0
         `in`.secondary = 0.0
 
-        `in`.one = ""
-        `in`.two = ""
-        `in`.special = ""
+        /*
+         * Details
+         */
+        `in`.primaryDetail = ""
+        `in`.secondaryDetail = ""
+//        `in`.special = ""
         `in`.disentitler = ""
 
+        /*
+         * Disentitlement
+         */
         eligibleTwo = true
     }
 

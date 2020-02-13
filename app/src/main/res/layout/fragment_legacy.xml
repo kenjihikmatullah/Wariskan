@@ -7,302 +7,329 @@
 
         <import type="android.view.View" />
 
-        <!--        <variable-->
-        <!--            name="legacy"-->
-        <!--            type="com.kenji.waris.model.Legacy" />-->
-
         <variable
             name="viewModel"
             type="com.wariskan.ui.legacy.LegacyViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Input -->
+                        <LinearLayout
+                            android:id="@+id/input_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:text="@string/legacy_instruction"
+                                android:textSize="15sp" />
+
+                            <!-- Legacy -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:hint="@string/legacy">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/legacy_et"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/white"
+                                    android:inputType="number"
+                                    android:maxLength="23"
+                                    android:shadowColor="@color/primaryColor"
+                                    android:singleLine="true" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <!--        <EditText-->
+                            <!--            android:layout_marginTop="10dp"-->
+                            <!--            android:id="@+id/legacy_et"-->
+                            <!--            android:layout_width="match_parent"-->
+                            <!--            android:layout_height="wrap_content"-->
+                            <!--            android:hint="@string/legacy"-->
+                            <!--            android:inputType="number"-->
+                            <!--            android:singleLine="true" />-->
+
+                            <!-- Calculate -->
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:onClick="@{() -> viewModel.calculate()}"
+                                android:text="@string/calculate"
+                                android:textColor="@android:color/white" />
+                        </LinearLayout>
+
+                        <!-- Output -->
+                        <LinearLayout
+                            android:id="@+id/output_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/legacy_tv"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textColor="@color/primaryLightColor"
+                                android:textSize="25sp"
+                                android:textStyle="bold"
+                                android:onClick="@{() -> viewModel.calculate()}"
+                                tools:text="3.000.100.000" />
+
+                        </LinearLayout>
+
+                        <!-- Statistics -->
+                        <LinearLayout
+                            android:id="@+id/stats_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <!-- Shareability -->
+                            <LinearLayout
+                                android:id="@+id/stats_shareability_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="30dp"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:text="Shareability"
+                                    android:textColor="@color/primaryLightColor"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/stats_shared"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/calc_total_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="4"
+                                        android:text="Shared"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/stats_shared_amount"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="right"
+                                        android:textColor="@color/primaryLightColor"
+                                        android:textStyle="bold"
+                                        app:layout_constraintLeft_toRightOf="@id/calc_total_title"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        tools:text="3.000.000.000" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/stats_rest"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/stats_rest_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="4"
+                                        android:text="Rest"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/stats_rest_amount"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="right"
+                                        android:textStyle="bold"
+                                        app:layout_constraintLeft_toRightOf="@id/stats_rest_title"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        tools:text="100.000" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </LinearLayout>
+
+                            <!-- Type -->
+                            <LinearLayout
+                                android:id="@+id/stats_type_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="30dp"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:text="Type"
+                                    android:textColor="@color/primaryLightColor"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/stats_primary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/stats_primary_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/ashabul_furudh"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/stats_primary_amount"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="right"
+                                        android:maxLines="4"
+                                        android:textStyle="bold"
+                                        app:layout_constraintLeft_toRightOf="@id/stats_primary_title"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        tools:text="1.000.000" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/stats_secondary"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/stats_secondary_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/ashabah"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/stats_secondary_amount"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="right"
+                                        android:maxLines="4"
+                                        android:textStyle="bold"
+                                        app:layout_constraintLeft_toRightOf="@id/stats_secondary_title"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        tools:text="2.000.000" />
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+                <!-- Calculated -->
+                <LinearLayout
+                    android:id="@+id/calculated_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/calculated_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/calculated_title"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/calculated_instruction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/calculated_instruction"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/show_stats_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:onClick="@{() -> viewModel.showStats()}"
+                        android:text="Show Stats"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.gms.ads.AdView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="bottom"
+            ads:adSize="LARGE_BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 
-            <!-- Input -->
-            <LinearLayout
-                android:id="@+id/input_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:text="@string/legacy_instruction"
-                    android:textSize="15sp" />
-
-                <!-- Legacy -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/legacy">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/legacy_et"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/white"
-                        android:inputType="number"
-                        android:maxLength="23"
-                        android:shadowColor="@color/primaryColor"
-                        android:singleLine="true" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!--        <EditText-->
-                <!--            android:layout_marginTop="10dp"-->
-                <!--            android:id="@+id/legacy_et"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:hint="@string/legacy"-->
-                <!--            android:inputType="number"-->
-                <!--            android:singleLine="true" />-->
-
-                <!-- Calculate -->
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:onClick="@{() -> viewModel.calculate()}"
-                    android:text="@string/calculate"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
-
-            <!-- Output -->
-            <LinearLayout
-                android:id="@+id/output_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/legacy_tv"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/primaryLightColor"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:onClick="@{() -> viewModel.calculate()}"
-                    tools:text="3.000.100.000" />
-
-            </LinearLayout>
-
-            <!-- Statistics -->
-            <LinearLayout
-                android:id="@+id/stats_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <!-- Shareability -->
-                <LinearLayout
-                    android:id="@+id/stats_shareability_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="30dp"
-                    android:orientation="vertical"
-                    tools:visibility="visible">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Shareability"
-                        android:textColor="@color/primaryLightColor"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/stats_shared"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/calc_total_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="4"
-                            android:text="Shared"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/stats_shared_amount"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:textColor="@color/primaryLightColor"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toRightOf="@id/calc_total_title"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="3.000.000.000" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/stats_rest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/stats_rest_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="4"
-                            android:text="Rest"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/stats_rest_amount"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toRightOf="@id/stats_rest_title"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="100.000" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-
-                <!-- Type -->
-                <LinearLayout
-                    android:id="@+id/stats_type_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="30dp"
-                    android:orientation="vertical"
-                    tools:visibility="visible">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Type"
-                        android:textColor="@color/primaryLightColor"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/stats_primary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/stats_primary_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ashabul_furudh"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/stats_primary_amount"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:maxLines="4"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toRightOf="@id/stats_primary_title"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="1.000.000" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/stats_secondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/stats_secondary_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/ashabah"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/stats_secondary_amount"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:maxLines="4"
-                            android:textStyle="bold"
-                            app:layout_constraintLeft_toRightOf="@id/stats_secondary_title"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="2.000.000" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Calculated -->
-            <LinearLayout
-                android:id="@+id/calculated_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/calculated_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/calculated_title"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/calculated_instruction"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/calculated_instruction"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
-                <Button
-                    android:id="@+id/show_stats_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:onClick="@{() -> viewModel.showStats()}"
-                    android:text="Show Stats"
-                    android:textColor="@android:color/white" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
 </layout>

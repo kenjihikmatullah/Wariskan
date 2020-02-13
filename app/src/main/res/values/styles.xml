@@ -33,23 +33,19 @@
     </style>
 
     <!-- Deceased -->
-
     <style name="header_text" parent="match_wrap">
         <item name="android:textSize">@dimen/headerTextSize</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
-
     <style name="row_layout" parent="wrap_wrap">
     </style>
-
     <style name="row_image">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_alignParentLeft">true</item>
     </style>
-
     <style name="row_title" parent="wrap_wrap">
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textStyle">bold</item>
@@ -57,7 +53,6 @@
         <item name="android:inputType">textMultiLine</item>
         <item name="android:layout_marginLeft">10dp</item>
     </style>
-
     <style name="row_body" parent="wrap_wrap">
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:textColor">@android:color/black</item>
@@ -69,7 +64,6 @@
     <style name="addedit_row_layout" parent="match_wrap">
         <item name="android:layout_marginTop">20dp</item>
     </style>
-
     <style name="addedit_row_label" parent="wrap_wrap">
         <item name="android:paddingLeft">12dp</item>
         <item name="android:layout_width">0dp</item>
@@ -77,12 +71,10 @@
         <item name="layout_constraintTop_toTopOf">parent</item>
         <item name="layout_constraintBottom_toBottomOf">parent</item>
     </style>
-
     <style name="addedit_row_guideline" parent="wrap_wrap">
         <item name="android:orientation">vertical</item>
         <item name="layout_constraintGuide_percent">0.5</item>
     </style>
-
     <style name="addedit_row_spinner" parent="wrap_wrap">
         <item name="android:layout_width">0dp</item>
         <item name="layout_constraintRight_toRightOf">parent</item>
@@ -99,6 +91,14 @@
         <item name="layout_constraintBottom_toBottomOf">parent</item>
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginBottom">15dp</item>
+    </style>
+
+    <!-- Heir Item -->
+    <style name="heir_item_details_title">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="heir_item_details_body">
+        <item name="android:textSize">15sp</item>
     </style>
 
 </resources>

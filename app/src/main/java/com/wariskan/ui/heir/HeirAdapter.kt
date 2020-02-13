@@ -110,7 +110,7 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
              */
             it.root.context.resources.let { res ->
                 it.calcPrimaryAmount.text = getNumber(res, heir.`in`.primary)
-                it.calcSpecialAmount.text = getNumber(res, heir.`in`.specialAmount)
+//                it.calcSpecialAmount.text = getNumber(res, heir.`in`.specialAmount)
                 it.calcSecondaryAmount.text = getNumber(res, heir.`in`.secondary)
                 it.calcTotalAmount.text = getNumber(res, heir.`in`.total)
             }
@@ -160,18 +160,18 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
                 /*
                  * Special
                  */
-                if (heir.`in`.specialAmount > 0) {
-                    it.specialLayout.visibility = VISIBLE
-//                                it.specialDetails.text = item.`in`.special
-                    it.specialHeader.apply {
-                        val one = context.getString(special)
-//                        val two = getNumber(resources, heir.`in`.specialAmount)
-//                        text = context.getString(legacy_details_header, one, two)
-                        text = one
-                    }
-                } else {
-                    it.specialLayout.visibility = GONE
-                }
+//                if (heir.`in`.specialAmount > 0) {
+//                    it.specialLayout.visibility = VISIBLE
+////                                it.specialDetails.text = item.`in`.special
+//                    it.specialHeader.apply {
+//                        val one = context.getString(special)
+////                        val two = getNumber(resources, heir.`in`.specialAmount)
+////                        text = context.getString(legacy_details_header, one, two)
+//                        text = one
+//                    }
+//                } else {
+//                    it.specialLayout.visibility = GONE
+//                }
 
                 /*
                  * Secondary
