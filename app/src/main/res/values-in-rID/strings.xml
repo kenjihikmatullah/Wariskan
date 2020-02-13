@@ -87,4 +87,8 @@
     <string name="maternal_sibling_1_6">Saudara seibu dapat 1/6 jika sendiri dan kalalah (An Nisa : 12)</string>
     <string name="maternal_siblings_1_3">Saudara seibu dapat 1/3 jika >1 dan kalalah. Dibagi rata. (An Nisa : 12)</string>
     <string name="paternal_brothers_secondary">Saudara laki seayah dapat ashabah, dibagi rata. Jika ada saudara perempuan seayah juga, dibagi dengan rasio 2:1</string>
+    <string name="type">Tipe</string>
+    <string name="show_stats">Tampilkan Stats</string>
+    <string name="shared">Dibagikan</string>
+    <string name="shareability">Pembagian</string>
 </resources>

@@ -385,4 +385,8 @@
     <string name="calculated_title">Calculated!</string>
     <string name="correction_text">Any mistake can be reported to <b>iniemailkenji@gmail.com</b></string>
     <string name="total" translatable="false">Total</string>
+    <string name="shareability">Shareability</string>
+    <string name="shared">Shared</string>
+    <string name="show_stats">Show Stats</string>
+    <string name="type">Type</string>
 </resources>

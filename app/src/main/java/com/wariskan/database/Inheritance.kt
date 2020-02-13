@@ -1034,7 +1034,7 @@ class Inheritance {
 
         return when (position) {
             DAD -> dad[order]
-            MOM -> dad[order]
+            MOM -> mom[order]
             HUSBAND -> husband[order]
             WIFE -> wives[order]
             CHILD -> children.children[order]
