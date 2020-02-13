@@ -39,13 +39,30 @@
                 ads:adSize="BANNER"
                 ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_gravity="center"
-                android:id="@+id/rv"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/heir_item" />
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_gravity="center"
+                        android:id="@+id/rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="LinearLayoutManager"
+                        tools:listitem="@layout/heir_item" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp" />
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
 
         </LinearLayout>
 
