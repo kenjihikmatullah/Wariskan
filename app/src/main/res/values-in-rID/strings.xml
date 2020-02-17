@@ -60,7 +60,7 @@
     <string name="mom_1_6">Ibu dapat 1/6 jika almarhum meninggalkan anak, cucu, atau beberapa saudara</string>
     <string name="mom_special">Ibu dapat bagian spesial jika almarhum meninggalkan ayah dan pasangan, tetapi tidak meninggalkan anak dan anak dari anak laki. Yaitu sebesar 1/3 dari sisa warisan setelah dibagikan kepada pasangan.</string>
     <string name="wives_1_4">Istri dapat 1/4 jika almarhum tidak meninggalkan anak atau cucu. Dibagi rata jika lebih dari satu</string>
-    <string name="wives_1_8">Istri dapat 1/8 jika almarhum meninggalkan anak atau cucu. @string/divided_equally (An Nisa : 12)</string>
+    <string name="wives_1_8">Istri dapat 1/8 jika almarhum meninggalkan anak atau cucu. Dibagi rata jika > 1 (An Nisa : 12)</string>
     <string name="legacy_instruction">Silakan isi jumlah warisan yang akan dibagikan</string>
     <string name="calculated_instruction">Kamu bisa lihat hasilnya di setiap profil pewaris</string>
     <string name="calculated_title">Berhasil!</string>
@@ -91,4 +91,30 @@
     <string name="show_stats">Tampilkan Stats</string>
     <string name="shared">Dibagikan</string>
     <string name="shareability">Pembagian</string>
+    <string name="debt_amount">Jumlah Utang</string>
+    <string name="will_amount">Jumlah Nilai Wasiat</string>
+    <string name="rest">Sisa</string>
+    <string name="legacy_total">Total Warisan</string>
+    <string name="funeral_costs">Biaya Pengurusan Jenazah</string>
+    <string name="correction_text">Jika ada kesalahan bisa dilaporkan ke <b>iniemailkenji@gmail.com</b></string>
+    <string name="disentitled_full_brothers_of_dad">Saudara laki seayah seibu dari ayah tidak dapat jika almarhum meninggalkan ayah, ayah dari ayah, anak laki, anak laki dari anak laki, saudara laki seayah seibu, saudara laki seayah, anak laki dari saudara laki seayah seibu, atau anak laki dari saudara laki seayah</string>
+    <string name="disentitled_mom_of_dad">Ibu dari ayah tidak dapat jika almarhum meninggalkan ayah atau ibu</string>
+    <string name="disentitled_mom_of_mom">Ibu dari ibu tidak dapat jika almarhum meninggalkan ibu</string>
+    <string name="disentitled_paternal_brothers">Saudara laki seayah tidak dapat jika almarhum meninggalkan ayah, anak laki, atau saudara laki seayah seibu</string>
+    <string name="disentitled_paternal_brothers_of_dad">Saudara laki seayah dari ayah tidak dapat jika almarhum meninggalkan ayah, ayah dari ayah, anak laki, anak laki dari anak laki, saudara laki seayah seibu , saudara laki seayah, anak laki dari saudara laki seayah seibu, anak laki dari saudara laki seayah, atau saudara laki seayah seibu dari ayah</string>
+    <string name="disentitled_sons_of_full_brothers">Anak laki dari saudara laki seayah seibu tidak dapat jika almarhum meninggalkan ayah, ayah dari ayah, anak laki, anak laki dari anak laki, saudara laki seayah seibu, atau saudara laki seayah</string>
+    <string name="disentitled_sons_of_paternal_brothers">Anak laki dari saudara laki seayah tidak dapat jika almarhum meninggalkan ayah, ayah dari ayah, anak laki, anak laki dari anak laki, saudara laki seayah seibu, saudara laki seayah, atau anak laki dari saudara laki seayah seibu</string>
+    <string name="disentitled_sons_of_paternal_brothers_of_dad">Anak laki dari saudara laki seayah dari ayah tidak dapat jika almarhum meninggalkan ayah, ayah dari ayah, anak laki, anak laki dari anak laki, saudara laki seayah seibu, saudara laki seayah, anak laki dari saudara laki seayah seibu, anak laki dari saudara laki seayah, saudara laki seayah seibu dari ayah, atau saudara laki seayah dari ayah</string>
+    <string name="grandmas_1_6">Nenek dapat 1/6 jika almarhum meninggalkan anak, anak dari anak laki, atau jumlah saudara seayah seibu > 1. Dibagi rata jika lebih dari satu</string>
+    <string name="full_sisters_2_3">Saudara perempuan seayah seibu dapat 2/3 jika > 1, kalalah, dan almarhum tidak meninggalkan saudara laki seayah seibu, anak perempuan, dan anak perempuan dari anak laki. (An Nisa : 176)</string>
+    <string name="full_sisters_secondary">Saudara seayah seibu dapat ashabah dengan rasio 2:1. (Laki 2x lipat dari perempuan)</string>
+    <string name="paternal_sister_1_2">Saudara perempuan seayah dapat 1/2 jika sendiri, kalalah, dan almarhum tidak meninggalkan anak perempuan, anak perempuan dari anak laki, saudara seayah seibu, dan saudara laki seayah.</string>
+    <string name="paternal_sisters_1_6">
+        Saudara perempuan seayah dapat 1/6 jika kalalah,  almarhum meninggalkan seorang saudara perempuan seayah seibu, dan almarhum tidak meninggalkan anak perempuan, anak perempuan dari anak laki, saudara laki seayah seibu, dan saudara laki seayah.
+        .
+    </string>
+    <string name="paternal_sisters_2_3">Saudara perempuan seayah dapat 2/3 jika bersama, kalalah, dan almarhum tidak meninggalkan anak perempuan, anak perempuan dari anak laki, saudara seayah seibu, dan saudara laki seayah.</string>
+    <string name="paternal_sisters_secondary">Saudara seayah dapat ashabah, dibagi dengan rasio 2:1. (Laki dapat 2x lipat dari perempuan)</string>
+    <string name="son_secondary">Anak laki dapat ashabah, dibagi rata. Jika ada anak perempuan juga, dibagi dengan rasio 2:1. (Laki dapat 2x lipat dari perempuan)</string>
+    <string name="sons_of_sons_secondary">Anak laki dari anak laki dapat ashabah, dibagi rata. Jika ada anak perempuan dari anak laki juga, dibagi dengan rasio 2:1. (Laki dapat 2x lipat dari perempuan)</string>
 </resources>

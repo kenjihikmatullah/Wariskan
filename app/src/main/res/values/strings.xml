@@ -214,11 +214,7 @@
         didn\'t leave daughter, daughter of son, full brother,
         full sister, and paternal brother.
     </string>
-    <string name="paternal_sisters_1_6">
-        Paternal sisters get 1/6 if kalalah, the deceased left only
-        a full sister, and the deceased
-        didn\'t leave full brother and paternal brother
-    </string>
+    <string name="paternal_sisters_1_6">"         Paternal sisters get 1/6 if kalalah, the deceased left only         a full sister, and the deceased         didn't leave full brother and paternal brother     "</string>
     <string name="maternal_siblings_1_3">
         Maternal siblings get 1/3 if more than one and kalalah.
         Divided equally. (An Nisa : 12)
@@ -249,9 +245,6 @@
     </string>
 
     <!-- Special -->
-    <string name="special">
-        Special
-    </string>
     <string name="mom_special">
         Mom gets special amount (Umar\'s Fatwa). If the deceased left dad
         and spouse, but didn\'t leave child and child of son, mom gets 1/3 of the remaining
@@ -323,20 +316,17 @@
     <!-- Disentitled -->
     <string name="disentitled">Disentitled</string>
     <string name="disentitled_children_of_sons">
-        Children of sons are disentitled if
-        the deceased left sons
+        Children of sons are disentitled by sons
     </string>
     <string name="disentitled_dad_of_dad">
         Dad of dad is disentitled if the deceased
         left dad
     </string>
     <string name="disentitled_mom_of_dad">
-        Dad of dad is disentitled if the deceased
-        left dad and mom
+        Mom of dad is disentitled by dad and mom
     </string>
     <string name="disentitled_mom_of_mom">
-        Mom of mom is disentitled if the deceased
-        left mom
+        Mom of mom is disentitled by mom
     </string>
     <string name="disentitled_full_brothers">
         Full brothers are disentitled by dad and sons
@@ -345,7 +335,7 @@
         Paternal brothers are disentitled by dad, sons,
         and full brothers
     </string>
-    <string name="disentitled_maternal_brothers">
+    <string name="disentitled_maternal_brothers" translatable="false">
         Maternal brothers are disentitled by dad, sons,
         and full brothers
     </string>
@@ -369,12 +359,11 @@
         sons of full brothers, sons of paternal brothers, and
         <b>full brotbers of dad</b>
     </string>
-    <string name="disentitled_sons_of_paternal_brothers_of_dad">
+    <string name="disentitled_sons_of_paternal_brothers_of_dad">"
         Sons of paternal brothers of dad are <b>disentitled by</b> dad,
         dad of dad, sons, sons of sons, full brothers, paternal brothers,
         sons of full brothers, sons of paternal brothers,
-        full brotbers of dad, and <b>paternal brothers of dad</b>
-    </string>
+        full brotbers of dad, and <b>paternal brothers of dad</b>     "</string>
 
     <!-- Legacy -->
     <string name="legacy">Legacy</string>
@@ -389,4 +378,9 @@
     <string name="shared">Shared</string>
     <string name="show_stats">Show Stats</string>
     <string name="type">Type</string>
+    <string name="legacy_total">Total of Legacy</string>
+    <string name="funeral_costs">Funeral Costs</string>
+    <string name="debt_amount">Debt Amount</string>
+    <string name="will_amount">Will Amount</string>
+    <string name="rest">Rest</string>
 </resources>

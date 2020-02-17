@@ -88,7 +88,7 @@ class HeirAdapter(private val listener: Listener) : ListAdapter<Heir, ViewHolder
                 //        binding.adView.adUnitId = "ca-app-pub-3178233257268861/3852439663"
 //                it.adView.adUnitId = "ca-app-pub-3940256099942544/6300978111" // testing
                 val adRequest = AdRequest.Builder().build()
-//                it.adView.loadAd(adRequest)
+                it.adView.loadAd(adRequest)
                 it.adView.adListener = object : AdListener() {
                     override fun onAdLoaded() {
                         super.onAdLoaded()

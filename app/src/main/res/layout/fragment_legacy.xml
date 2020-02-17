@@ -50,7 +50,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:hint="Total of Legacy">
+                            android:hint="@string/legacy_total">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/legacy_et"
@@ -69,7 +69,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:hint="Funeral Costs">
+                            android:hint="@string/funeral_costs">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/legacy_funeral_et"
@@ -88,7 +88,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:hint="Debt Amount">
+                            android:hint="@string/debt_amount">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/legacy_debt_et"
@@ -107,7 +107,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:hint="Will Amount">
+                            android:hint="@string/will_amount">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/legacy_will_et"
@@ -203,7 +203,7 @@
                                     style="@style/legacy_stats_body"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:gravity="right"
+                                    android:gravity="end"
                                     android:textColor="@color/primaryLightColor"
                                     android:textStyle="bold"
                                     app:layout_constraintLeft_toRightOf="@id/calc_total_title"
@@ -224,7 +224,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:maxLines="4"
-                                    android:text="Rest"
+                                    android:text="@string/rest"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -234,7 +234,7 @@
                                     style="@style/legacy_stats_body"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:gravity="right"
+                                    android:gravity="end"
                                     android:textStyle="bold"
                                     app:layout_constraintLeft_toRightOf="@id/stats_rest_title"
                                     app:layout_constraintRight_toRightOf="parent"
@@ -282,7 +282,7 @@
                                     style="@style/legacy_stats_body"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:gravity="right"
+                                    android:gravity="end"
                                     android:maxLines="4"
                                     android:textStyle="bold"
                                     app:layout_constraintLeft_toRightOf="@id/stats_primary_title"
@@ -309,7 +309,7 @@
                                     android:id="@+id/stats_secondary_amount"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:gravity="right"
+                                    android:gravity="end"
                                     android:maxLines="4"
                                     android:textStyle="bold"
                                     app:layout_constraintLeft_toRightOf="@id/stats_secondary_title"
@@ -374,8 +374,7 @@
             android:layout_gravity="bottom"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:visibility="gone"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            ads:adUnitId="ca-app-pub-3178233257268861/8063147418"
             ads:adSize="LARGE_BANNER" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

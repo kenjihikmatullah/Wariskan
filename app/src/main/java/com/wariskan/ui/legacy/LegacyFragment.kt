@@ -228,6 +228,8 @@ class LegacyFragment : Fragment() {
                                     legacyWillEt.let { et ->
                                         if (et.text.isNullOrBlank())
                                             et.error = activity.getString(et_blank)
+                                        else if ("${et.text}".getStringNoComma().toDouble() > it.total / 3)
+                                            et.error = "Will amount can't be more than 1/3 of legacy total"
                                         else
                                             it.willAmount = "${et.text}".getStringNoComma().toDouble()
                                     }

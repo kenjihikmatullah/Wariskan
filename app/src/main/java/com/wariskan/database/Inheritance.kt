@@ -158,12 +158,12 @@ class Inheritance {
              * - dad of dad
              * - children
              */
-            siblings.maternalBrothers.forEach {
-                // it.eligibleTwo = !(dad.thatEligibleIsExist() || grandpas.dadOfDad.thatEligibleIsExist() || children.children.thatEligibleIsExist())
-                it.eligibleTwo = kalalah
-                if (!it.eligibleTwo)
-                    it.`in`.disentitler = context.getString(disentitled_maternal_brothers)
-            }
+//            siblings.maternalBrothers.forEach {
+//                // it.eligibleTwo = !(dad.thatEligibleIsExist() || grandpas.dadOfDad.thatEligibleIsExist() || children.children.thatEligibleIsExist())
+//                it.eligibleTwo = kalalah
+//                if (!it.eligibleTwo)
+//                    it.`in`.disentitler = context.getString(disentitled_maternal_brothers)
+//            }
 
             /*
              * Paternal sisters
@@ -172,7 +172,6 @@ class Inheritance {
                 //                it.eligibleTwo = !(children.sons.thatEligibleIsExist() || grandchildren.sonsOfSons.thatEligibleIsExist() || dad.thatEligibleIsExist() || siblings.fullBrothers.thatEligibleIsExist())
                 it.eligibleTwo = kalalah
             }
-
 
             /**
              * Sons of full brothers
@@ -637,7 +636,7 @@ class Inheritance {
 
                 /*
                  * Paternal sisters
-                 * get 1/2 if alone, kalalah,
+                 * get 1/6 if alone, kalalah,
                  * the deceased left a full sister,
                  * and the deceased didn't leave paternal brothers.
                  * daughter, daughter of son,
