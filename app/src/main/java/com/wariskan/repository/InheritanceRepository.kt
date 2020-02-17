@@ -1,8 +1,12 @@
 package com.wariskan.repository
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.kenji.waris.database.Inheritance
 import com.kenji.waris.database.InheritanceDatabase
+import com.wariskan.network.Api
+import com.wariskan.network.InheritanceNetwork
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
@@ -38,6 +42,15 @@ class InheritanceRepository(private val database: InheritanceDatabase) {
         return withContext(IO) {
             database.dao.get(id)
         }
+    }
+
+    suspend fun getAllFromNetwork() {
+//        withContext(IO) {
+//
+//            val inheritances = Api.apiServices.getAll().inheritances
+//            if (inheritances.isNotEmpty())
+//                Log.i("HEHEHE", "${inheritances[0].id_room}")
+//        }
     }
 
     /*
