@@ -38,6 +38,7 @@ class LoginViewModel : ViewModel() {
         }
 
         scope.launch {
+//            TODO("try and catch block in kotlin codelabs")
             val response = apiServices.login(email, password)
             Log.i("HEHEHE", "inheritances: ${response.inheritances}")
         }
