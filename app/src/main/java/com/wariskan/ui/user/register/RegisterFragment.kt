@@ -1,27 +1,28 @@
-package com.wariskan.ui.user
+package com.wariskan.ui.user.register
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil.inflate
-import androidx.fragment.app.Fragment
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.wariskan.R.layout.fragment_login
-import com.wariskan.databinding.FragmentLoginBinding
 
-class LoginFragment : Fragment() {
+import com.wariskan.R
+import com.wariskan.databinding.FragmentRegisterBinding
+import com.wariskan.ui.user.register.RegisterViewModel
 
-    private lateinit var binding: FragmentLoginBinding
-    private lateinit var viewModel: LoginViewModel
+class RegisterFragment : Fragment() {
+
+    private lateinit var binding: FragmentRegisterBinding
+    private lateinit var viewModel: RegisterViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = inflate(inflater, fragment_login, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         setUpViewModel()
         setOnLogin()
         return binding.root
@@ -32,7 +33,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun setOnLogin() {
-        binding.loginBtn.setOnClickListener(object : OnClickListener {
+        binding.loginBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 viewModel.apply {
                     binding.apply {

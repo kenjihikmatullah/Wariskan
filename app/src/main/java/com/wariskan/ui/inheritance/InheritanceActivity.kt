@@ -27,8 +27,8 @@ class InheritanceActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intent = Intent(this, UserActivity::class.java)
-        startActivity(intent)
+//        val intent = Intent(this, UserActivity::class.java)
+//        startActivity(intent)
 
         binding = setContentView(this, activity_inheritance)
         setUpViewModel()

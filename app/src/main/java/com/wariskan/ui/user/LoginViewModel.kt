@@ -1,20 +1,12 @@
 package com.wariskan.ui.user
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.wariskan.model.LoginResponse
-import com.wariskan.network.Api
 import com.wariskan.network.Api.apiServices
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
 
@@ -47,7 +39,7 @@ class LoginViewModel : ViewModel() {
 
         scope.launch {
             val response = apiServices.login(email, password)
-            Log.i("HEHEHE", "nama: ${response.user.name}")
+            Log.i("HEHEHE", "inheritances: ${response.inheritances}")
         }
     }
 
