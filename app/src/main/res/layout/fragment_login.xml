@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.wariskan.ui.user.LoginViewModel" />
     </data>
 
     <LinearLayout
@@ -52,10 +54,10 @@
 
         <!-- Login -->
         <Button
+            android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:onClick="@{() -> viewModel.calculate()}"
             android:text="Login"
             android:textColor="@android:color/white" />
 

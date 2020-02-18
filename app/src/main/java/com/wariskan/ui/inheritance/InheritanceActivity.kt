@@ -1,8 +1,9 @@
 package com.wariskan.ui.inheritance
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil.setContentView
-import androidx.lifecycle.ViewModelProviders.of
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
@@ -11,6 +12,7 @@ import com.kenji.waris.model.Position
 import com.wariskan.R.id.nav_host_fragment
 import com.wariskan.R.id.navigation_heirs
 import com.wariskan.R.layout.activity_inheritance
+import com.wariskan.ui.user.UserActivity
 import com.wariskan.util.ID
 import com.wariskan.util.POSITION
 import androidx.appcompat.app.AppCompatActivity as Activity
@@ -24,8 +26,11 @@ class InheritanceActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = setContentView(this, activity_inheritance)
 
+        val intent = Intent(this, UserActivity::class.java)
+        startActivity(intent)
+
+        binding = setContentView(this, activity_inheritance)
         setUpViewModel()
         handleExtras()
         setUpNavigation()
@@ -42,7 +47,7 @@ class InheritanceActivity : Activity() {
     private fun setUpViewModel() {
         val database = getInstance(this)
         val factory = Factory(database)
-        viewModel = of(this, factory).get(ViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(ViewModel::class.java)
     }
 
     private fun handleExtras() {

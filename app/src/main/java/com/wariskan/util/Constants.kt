@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.widget.EditText
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.wariskan.network.User
 import java.text.NumberFormat
 import java.text.NumberFormat.getNumberInstance
 import java.util.*
@@ -16,16 +17,8 @@ import kotlin.math.floor
 const val ID = "ID"
 const val POSITION = "POSITION"
 const val ORDER = "ORDER"
-
 const val TO = "TO"
-
 const val ADMOB_ID = "ca-app-pub-3178233257268861~5817631177"
-
-val MIGRATION_to_1_2 = object : Migration(1, 2) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-
-    }
-}
 
 fun getLocale(conf: Configuration): Locale {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -104,3 +97,7 @@ fun getWatcher(et: EditText, res: Resources) : TextWatcher {
         }
     }
 }
+
+// Temporary
+var isLoggedIn = false
+var user: User? = null
